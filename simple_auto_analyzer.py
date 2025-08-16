@@ -244,9 +244,9 @@ class MatchAnalyzer:
         # Коэффициенты
         if '1' in odds and self.criteria['football']['min_odds'] <= odds['1'] <= self.criteria['football']['max_odds']:
             confidence += 0.2
-            reasoning.append(f"Коэффициент П1: {odds['1']} (в допустимом диапазоне)")
+            reasoning.append(f"Коэффициент П1: {odds['1']}")
         else:
-            reasoning.append(f"Коэффициент П1: {odds.get('1', 'N/A')} (не в диапазоне)")
+            reasoning.append(f"Коэффициент П1: {odds.get('1', 'N/A')}")
         
         # Рейтинги команд (если доступны)
         if rankings:
@@ -304,7 +304,7 @@ class MatchAnalyzer:
         # Коэффициенты
         if '1' in odds and self.criteria['basketball']['min_odds'] <= odds['1'] <= self.criteria['basketball']['max_odds']:
             confidence += 0.1
-            reasoning.append(f"Коэффициент П1: {odds['1']} (в допустимом диапазоне)")
+            reasoning.append(f"Коэффициент П1: {odds['1']}")
         
         # Определяем рекомендацию
         if confidence >= 0.7:
@@ -346,7 +346,7 @@ class MatchAnalyzer:
         # Коэффициенты
         if '1' in odds and self.criteria['tennis']['min_odds'] <= odds['1'] <= self.criteria['tennis']['max_odds']:
             confidence += 0.3
-            reasoning.append(f"Коэффициент П1: {odds['1']} (в допустимом диапазоне)")
+            reasoning.append(f"Коэффициент П1: {odds['1']}")
         
         # Определяем рекомендацию
         if confidence >= 0.7:
@@ -495,8 +495,6 @@ class TelegramNotifier:
                         clean_reason = clean_reason.replace('выгодная ситуация', 'выгодная ситуация')
                     elif 'Четверть' in clean_reason and 'выгодная' in clean_reason:
                         clean_reason = clean_reason.replace('четверть', 'четверть')
-                    elif 'Коэффициент' in clean_reason:
-                        clean_reason = clean_reason.replace('в диапазоне', 'в допустимом диапазоне')
                     
                     # Дополнительные исправления падежей
                     if 'не оптимально' in clean_reason:
