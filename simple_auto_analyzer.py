@@ -404,7 +404,7 @@ class TelegramNotifier:
         return self.send_message(message, self.channel_id)
     
     def format_telegram_message(self, match: Dict, analysis: Dict, claude_analysis: Dict = None) -> str:
-        """Форматирует сообщение для Telegram"""
+        """Форматирует сообщение для Telegram в прежнем формате"""
         sport = match.get('sport', 'football')
         team1 = match.get('team1', 'Команда 1')
         team2 = match.get('team2', 'Команда 2')
@@ -412,45 +412,83 @@ class TelegramNotifier:
         time = match.get('time', '0')
         odds = match.get('odds', {})
         
-        # Базовое сообщение
+        # Эмодзи для видов спорта
+        sport_emoji = {
+            'football': '⚽',
+            'basketball': '🏀',
+            'tennis': '🎾',
+            'handball': '🤾',
+            'table_tennis': '🏓'
+        }.get(sport, '🏆')
+        
+        # Определяем источник анализа
+        if claude_analysis and claude_analysis.get('enabled'):
+            analysis_source = "🧠 Claude AI + Python"
+            confidence = analysis.get('final_confidence', analysis['confidence'])
+        else:
+            analysis_source = "🐍 Python скрипт"
+            confidence = analysis['confidence']
+        
+        # Форматируем время в зависимости от вида спорта
         if sport == 'football':
             time_info = f"{time} мин"
         elif sport == 'basketball':
             quarter = match.get('quarter', '1')
-            time_info = f"{time} мин, {quarter} четверть"
+            time_info = f"Четверть {quarter}"
         elif sport == 'tennis':
             sets = match.get('sets', '0:0')
             time_info = f"Сеты: {sets}"
         else:
             time_info = f"{time}"
         
-        # Определяем тип рекомендации
+        # Определяем рекомендацию
         if analysis['recommendation'] == 'strong_buy':
-            emoji = "⭐"
-            title = "ИДЕАЛЬНЫЙ ВАРИАНТ"
+            recommendation = f"Победа {team1}" if '1' in odds else f"Победа {team2}"
         elif analysis['recommendation'] == 'buy':
-            emoji = "🔥"
-            title = "МЕРТВАЯ СТАВКА"
+            recommendation = f"Победа {team1}" if '1' in odds else f"Победа {team2}"
         else:
-            emoji = "⚠️"
-            title = "НЕ РЕКОМЕНДУЕТСЯ"
+            recommendation = "Анализ в процессе"
         
-        # Формируем сообщение
-        message = f"{emoji} <b>{title}:</b>\n"
-        message += f"{team1} vs {team2} - {score}, {time_info}\n"
-        message += f"📊 <b>СПРАВКА:</b> {analysis['reasoning']}\n"
+        # Формируем сообщение в прежнем формате
+        message = f"🎯 <b>TrueLiveBet - Найден подходящий матч!</b>\n\n"
+        message += f"{sport_emoji} <b>Вид спорта:</b> {sport.title()}\n"
+        message += f"🏆 <b>Матч:</b> {team1} vs {team2}\n"
+        message += f"📊 <b>Счет:</b> {score}\n"
+        message += f"⏰ <b>Время:</b> {time_info}\n"
+        message += f"📈 <b>Уверенность:</b> {confidence:.0%}\n"
+        message += f"🔬 <b>Анализ:</b> {analysis_source}\n\n"
         
-        # Добавляем коэффициенты
-        if '1' in odds:
-            message += f"🔗 <b>П1 ({odds['1']}):</b> {match.get('url', 'N/A')}\n"
+        message += f"💡 <b>Рекомендация:</b> {recommendation}\n\n"
+        
+        # Добавляем обоснование
+        message += f"🔍 <b>Обоснование:</b>\n"
+        reasoning_parts = analysis.get('reasoning', '').split(' | ')
+        if reasoning_parts and reasoning_parts[0]:
+            for reason in reasoning_parts:
+                message += f"• {reason}\n"
+        else:
+            message += "• Недостаточно данных для рекомендации\n"
         
         # Добавляем анализ Claude (если доступен)
         if claude_analysis and claude_analysis.get('enabled'):
-            message += f"\n🤖 <b>Claude AI анализ:</b>\n"
-            message += f"📈 {claude_analysis.get('analysis_text', 'Анализ недоступен')}\n"
-            message += f"⚠️ <b>Риски:</b> {claude_analysis.get('risks', 'Не оценены')}\n"
-            message += f"💰 <b>Размер ставки:</b> {claude_analysis.get('bet_size', 'Не рекомендован')}\n"
-            message += f"🎯 <b>Итоговая уверенность:</b> {analysis.get('final_confidence', analysis['confidence']):.2f}"
+            message += f"\n🧠 <b>Claude AI анализ:</b>\n"
+            message += f"{claude_analysis.get('analysis_text', 'Анализ недоступен')}\n"
+            
+            if claude_analysis.get('risks'):
+                message += f"\n⚠️ <b>Риски:</b>\n"
+                risks = claude_analysis['risks']
+                if isinstance(risks, list):
+                    for risk in risks:
+                        message += f"• {risk}\n"
+                else:
+                    message += f"• {risks}\n"
+            
+            if claude_analysis.get('bet_size'):
+                message += f"\n💰 <b>Размер ставки:</b> {claude_analysis['bet_size']}% от банка\n"
+        
+        # Добавляем время анализа
+        current_time = datetime.now().strftime('%H:%M:%S')
+        message += f"\n⏰ <i>Анализ: {current_time}</i>"
         
         return message
 
