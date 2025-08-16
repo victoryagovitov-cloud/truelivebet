@@ -2231,5 +2231,885 @@
         }
       }
     }
+  },
+  {
+    "timestamp": "2025-08-16T11:43:52.504071",
+    "match": {
+      "id": "demo_1",
+      "sport": "football",
+      "team1": "Црвена Звезда",
+      "team2": "Лех Познань",
+      "score": "1:0",
+      "time": "88",
+      "status": "live",
+      "odds": {
+        "1": 1.1,
+        "X": 8.5,
+        "2": 15.0
+      },
+      "url": "https://betboom.ru/bet/87654321"
+    },
+    "analysis": {
+      "match_id": "demo_1",
+      "sport": "football",
+      "confidence": 0.6000000000000001,
+      "recommendation": "buy",
+      "reasoning": "Время матча: 88 мин | Счет 1:0 - выгодный паттерн | Коэффициент П1: 1.1",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 1,
+          "recent_form": [
+            "W",
+            "W",
+            "D",
+            "W",
+            "W"
+          ],
+          "points": 45,
+          "goals_for": 28,
+          "goals_against": 8,
+          "last_5_matches": [
+            "3:0",
+            "2:1",
+            "1:1",
+            "4:0",
+            "2:0"
+          ]
+        },
+        "team2": {
+          "league_position": 12,
+          "recent_form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ],
+          "points": 23,
+          "goals_for": 22,
+          "goals_against": 18,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:43:53.171419",
+    "match": {
+      "id": "demo_2",
+      "sport": "basketball",
+      "team1": "Барселона",
+      "team2": "Реал Мадрид",
+      "score": "25:20",
+      "time": "8",
+      "quarter": "2",
+      "status": "live",
+      "odds": {
+        "1": 1.8,
+        "2": 2.1
+      },
+      "url": "https://betboom.ru/event/12345678"
+    },
+    "analysis": {
+      "match_id": "demo_2",
+      "sport": "basketball",
+      "confidence": 0.7,
+      "recommendation": "strong_buy",
+      "reasoning": "Время четверти: 8 мин | Четверть 2 - не выгодная | Счет 25:20 - выгодный паттерн | Коэффициент П1: 1.8",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 2,
+          "recent_form": [
+            "W",
+            "L",
+            "W",
+            "D",
+            "W"
+          ],
+          "points": 42,
+          "goals_for": 35,
+          "goals_against": 18,
+          "last_5_matches": [
+            "3:1",
+            "0:2",
+            "4:0",
+            "2:2",
+            "1:0"
+          ]
+        },
+        "team2": {
+          "league_position": 5,
+          "recent_form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ],
+          "points": 35,
+          "goals_for": 16,
+          "goals_against": 30,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:43:53.739954",
+    "match": {
+      "id": "demo_3",
+      "sport": "tennis",
+      "team1": "Новак Джокович",
+      "team2": "Карлос Алькарас",
+      "score": "6:4, 7:5",
+      "sets": "2:0",
+      "status": "live",
+      "odds": {
+        "1": 1.5,
+        "2": 2.5
+      },
+      "url": "https://betboom.ru/event/98765432"
+    },
+    "analysis": {
+      "match_id": "demo_3",
+      "sport": "tennis",
+      "confidence": 0.3,
+      "recommendation": "skip",
+      "reasoning": "Сеты 2:0 - не выгодный паттерн | Счет 6:4, 7:5 - не выгодный паттерн | Коэффициент П1: 1.5",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 7,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 22,
+          "goals_for": 22,
+          "goals_against": 23,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        },
+        "team2": {
+          "league_position": 8,
+          "recent_form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ],
+          "points": 35,
+          "goals_for": 21,
+          "goals_against": 15,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:45:54.339146",
+    "match": {
+      "id": "demo_1",
+      "sport": "football",
+      "team1": "Црвена Звезда",
+      "team2": "Лех Познань",
+      "score": "1:0",
+      "time": "88",
+      "status": "live",
+      "odds": {
+        "1": 1.1,
+        "X": 8.5,
+        "2": 15.0
+      },
+      "url": "https://betboom.ru/bet/87654321"
+    },
+    "analysis": {
+      "match_id": "demo_1",
+      "sport": "football",
+      "confidence": 0.6000000000000001,
+      "recommendation": "buy",
+      "reasoning": "Время матча: 88 мин | Счет 1:0 - выгодный паттерн | Коэффициент П1: 1.1",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 1,
+          "recent_form": [
+            "W",
+            "W",
+            "D",
+            "W",
+            "W"
+          ],
+          "points": 45,
+          "goals_for": 28,
+          "goals_against": 8,
+          "last_5_matches": [
+            "3:0",
+            "2:1",
+            "1:1",
+            "4:0",
+            "2:0"
+          ]
+        },
+        "team2": {
+          "league_position": 3,
+          "recent_form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ],
+          "points": 25,
+          "goals_for": 21,
+          "goals_against": 20,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:45:54.908214",
+    "match": {
+      "id": "demo_2",
+      "sport": "basketball",
+      "team1": "Барселона",
+      "team2": "Реал Мадрид",
+      "score": "25:20",
+      "time": "8",
+      "quarter": "2",
+      "status": "live",
+      "odds": {
+        "1": 1.8,
+        "2": 2.1
+      },
+      "url": "https://betboom.ru/event/12345678"
+    },
+    "analysis": {
+      "match_id": "demo_2",
+      "sport": "basketball",
+      "confidence": 0.7,
+      "recommendation": "strong_buy",
+      "reasoning": "Время четверти: 8 мин | Четверть 2 - не выгодная | Счет 25:20 - выгодный паттерн | Коэффициент П1: 1.8",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 2,
+          "recent_form": [
+            "W",
+            "L",
+            "W",
+            "D",
+            "W"
+          ],
+          "points": 42,
+          "goals_for": 35,
+          "goals_against": 18,
+          "last_5_matches": [
+            "3:1",
+            "0:2",
+            "4:0",
+            "2:2",
+            "1:0"
+          ]
+        },
+        "team2": {
+          "league_position": 14,
+          "recent_form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ],
+          "points": 38,
+          "goals_for": 27,
+          "goals_against": 17,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:45:55.536265",
+    "match": {
+      "id": "demo_3",
+      "sport": "tennis",
+      "team1": "Новак Джокович",
+      "team2": "Карлос Алькарас",
+      "score": "6:4, 7:5",
+      "sets": "2:0",
+      "status": "live",
+      "odds": {
+        "1": 1.5,
+        "2": 2.5
+      },
+      "url": "https://betboom.ru/event/98765432"
+    },
+    "analysis": {
+      "match_id": "demo_3",
+      "sport": "tennis",
+      "confidence": 0.3,
+      "recommendation": "skip",
+      "reasoning": "Сеты 2:0 - не выгодный паттерн | Счет 6:4, 7:5 - не выгодный паттерн | Коэффициент П1: 1.5",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 4,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 38,
+          "goals_for": 26,
+          "goals_against": 28,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        },
+        "team2": {
+          "league_position": 10,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 26,
+          "goals_for": 28,
+          "goals_against": 19,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:47:56.171190",
+    "match": {
+      "id": "demo_1",
+      "sport": "football",
+      "team1": "Црвена Звезда",
+      "team2": "Лех Познань",
+      "score": "1:0",
+      "time": "88",
+      "status": "live",
+      "odds": {
+        "1": 1.1,
+        "X": 8.5,
+        "2": 15.0
+      },
+      "url": "https://betboom.ru/bet/87654321"
+    },
+    "analysis": {
+      "match_id": "demo_1",
+      "sport": "football",
+      "confidence": 0.6000000000000001,
+      "recommendation": "buy",
+      "reasoning": "Время матча: 88 мин | Счет 1:0 - выгодный паттерн | Коэффициент П1: 1.1",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 1,
+          "recent_form": [
+            "W",
+            "W",
+            "D",
+            "W",
+            "W"
+          ],
+          "points": 45,
+          "goals_for": 28,
+          "goals_against": 8,
+          "last_5_matches": [
+            "3:0",
+            "2:1",
+            "1:1",
+            "4:0",
+            "2:0"
+          ]
+        },
+        "team2": {
+          "league_position": 15,
+          "recent_form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ],
+          "points": 23,
+          "goals_for": 25,
+          "goals_against": 30,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:47:56.738133",
+    "match": {
+      "id": "demo_2",
+      "sport": "basketball",
+      "team1": "Барселона",
+      "team2": "Реал Мадрид",
+      "score": "25:20",
+      "time": "8",
+      "quarter": "2",
+      "status": "live",
+      "odds": {
+        "1": 1.8,
+        "2": 2.1
+      },
+      "url": "https://betboom.ru/event/12345678"
+    },
+    "analysis": {
+      "match_id": "demo_2",
+      "sport": "basketball",
+      "confidence": 0.7,
+      "recommendation": "strong_buy",
+      "reasoning": "Время четверти: 8 мин | Четверть 2 - не выгодная | Счет 25:20 - выгодный паттерн | Коэффициент П1: 1.8",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 2,
+          "recent_form": [
+            "W",
+            "L",
+            "W",
+            "D",
+            "W"
+          ],
+          "points": 42,
+          "goals_for": 35,
+          "goals_against": 18,
+          "last_5_matches": [
+            "3:1",
+            "0:2",
+            "4:0",
+            "2:2",
+            "1:0"
+          ]
+        },
+        "team2": {
+          "league_position": 5,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 30,
+          "goals_for": 30,
+          "goals_against": 27,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:47:57.290202",
+    "match": {
+      "id": "demo_3",
+      "sport": "tennis",
+      "team1": "Новак Джокович",
+      "team2": "Карлос Алькарас",
+      "score": "6:4, 7:5",
+      "sets": "2:0",
+      "status": "live",
+      "odds": {
+        "1": 1.5,
+        "2": 2.5
+      },
+      "url": "https://betboom.ru/event/98765432"
+    },
+    "analysis": {
+      "match_id": "demo_3",
+      "sport": "tennis",
+      "confidence": 0.3,
+      "recommendation": "skip",
+      "reasoning": "Сеты 2:0 - не выгодный паттерн | Счет 6:4, 7:5 - не выгодный паттерн | Коэффициент П1: 1.5",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 11,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 29,
+          "goals_for": 27,
+          "goals_against": 19,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        },
+        "team2": {
+          "league_position": 9,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 25,
+          "goals_for": 30,
+          "goals_against": 15,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:49:57.880015",
+    "match": {
+      "id": "demo_1",
+      "sport": "football",
+      "team1": "Црвена Звезда",
+      "team2": "Лех Познань",
+      "score": "1:0",
+      "time": "88",
+      "status": "live",
+      "odds": {
+        "1": 1.1,
+        "X": 8.5,
+        "2": 15.0
+      },
+      "url": "https://betboom.ru/bet/87654321"
+    },
+    "analysis": {
+      "match_id": "demo_1",
+      "sport": "football",
+      "confidence": 0.6000000000000001,
+      "recommendation": "buy",
+      "reasoning": "Время матча: 88 мин | Счет 1:0 - выгодный паттерн | Коэффициент П1: 1.1",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 1,
+          "recent_form": [
+            "W",
+            "W",
+            "D",
+            "W",
+            "W"
+          ],
+          "points": 45,
+          "goals_for": 28,
+          "goals_against": 8,
+          "last_5_matches": [
+            "3:0",
+            "2:1",
+            "1:1",
+            "4:0",
+            "2:0"
+          ]
+        },
+        "team2": {
+          "league_position": 15,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 39,
+          "goals_for": 30,
+          "goals_against": 24,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:49:58.470381",
+    "match": {
+      "id": "demo_2",
+      "sport": "basketball",
+      "team1": "Барселона",
+      "team2": "Реал Мадрид",
+      "score": "25:20",
+      "time": "8",
+      "quarter": "2",
+      "status": "live",
+      "odds": {
+        "1": 1.8,
+        "2": 2.1
+      },
+      "url": "https://betboom.ru/event/12345678"
+    },
+    "analysis": {
+      "match_id": "demo_2",
+      "sport": "basketball",
+      "confidence": 0.7,
+      "recommendation": "strong_buy",
+      "reasoning": "Время четверти: 8 мин | Четверть 2 - не выгодная | Счет 25:20 - выгодный паттерн | Коэффициент П1: 1.8",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 2,
+          "recent_form": [
+            "W",
+            "L",
+            "W",
+            "D",
+            "W"
+          ],
+          "points": 42,
+          "goals_for": 35,
+          "goals_against": 18,
+          "last_5_matches": [
+            "3:1",
+            "0:2",
+            "4:0",
+            "2:2",
+            "1:0"
+          ]
+        },
+        "team2": {
+          "league_position": 4,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 27,
+          "goals_for": 24,
+          "goals_against": 20,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:49:59.022967",
+    "match": {
+      "id": "demo_3",
+      "sport": "tennis",
+      "team1": "Новак Джокович",
+      "team2": "Карлос Алькарас",
+      "score": "6:4, 7:5",
+      "sets": "2:0",
+      "status": "live",
+      "odds": {
+        "1": 1.5,
+        "2": 2.5
+      },
+      "url": "https://betboom.ru/event/98765432"
+    },
+    "analysis": {
+      "match_id": "demo_3",
+      "sport": "tennis",
+      "confidence": 0.3,
+      "recommendation": "skip",
+      "reasoning": "Сеты 2:0 - не выгодный паттерн | Счет 6:4, 7:5 - не выгодный паттерн | Коэффициент П1: 1.5",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 6,
+          "recent_form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "D"
+          ],
+          "points": 30,
+          "goals_for": 18,
+          "goals_against": 20,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        },
+        "team2": {
+          "league_position": 3,
+          "recent_form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ],
+          "points": 39,
+          "goals_for": 15,
+          "goals_against": 25,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "timestamp": "2025-08-16T11:51:59.594527",
+    "match": {
+      "id": "demo_1",
+      "sport": "football",
+      "team1": "Црвена Звезда",
+      "team2": "Лех Познань",
+      "score": "1:0",
+      "time": "88",
+      "status": "live",
+      "odds": {
+        "1": 1.1,
+        "X": 8.5,
+        "2": 15.0
+      },
+      "url": "https://betboom.ru/bet/87654321"
+    },
+    "analysis": {
+      "match_id": "demo_1",
+      "sport": "football",
+      "confidence": 0.6000000000000001,
+      "recommendation": "buy",
+      "reasoning": "Время матча: 88 мин | Счет 1:0 - выгодный паттерн | Коэффициент П1: 1.1",
+      "analysis_source": "Python",
+      "rankings_data": {
+        "team1": {
+          "league_position": 1,
+          "recent_form": [
+            "W",
+            "W",
+            "D",
+            "W",
+            "W"
+          ],
+          "points": 45,
+          "goals_for": 28,
+          "goals_against": 8,
+          "last_5_matches": [
+            "3:0",
+            "2:1",
+            "1:1",
+            "4:0",
+            "2:0"
+          ]
+        },
+        "team2": {
+          "league_position": 9,
+          "recent_form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ],
+          "points": 34,
+          "goals_for": 30,
+          "goals_against": 24,
+          "last_5_matches": [
+            "1:0",
+            "2:1",
+            "0:1",
+            "3:2",
+            "1:1"
+          ]
+        }
+      }
+    }
   }
 ]
