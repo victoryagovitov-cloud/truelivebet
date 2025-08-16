@@ -172,62 +172,30 @@ def simulate_live_matches():
     return matches
 
 def format_telegram_message(match, analysis_result):
-    """Форматирует сообщение для Telegram в стиле TrueLiveBet"""
-    
-    # Определяем тип ставки по уверенности
-    if analysis_result['confidence'] >= 85:
-        bet_type = "⭐ ИДЕАЛЬНЫЙ ВАРИАНТ"
-        emoji = "⭐"
-    elif analysis_result['confidence'] >= 75:
-        bet_type = "🔥 МЕРТВАЯ СТАВКА"
-        emoji = "🔥"
-    else:
-        bet_type = "📊 АНАЛИЗ"
-        emoji = "📊"
-    
-    # Формируем время матча
-    time_info = match['time'] if match['time'] else f"Квартал {match['quarter']}"
-    
-    # Формируем справку
-    if match['sport'] == 'football':
-        if 'Барселона' in match['team1'] or 'Барселона' in match['team2']:
-            spravka = "Испанский гранд против мадридского клуба"
-        elif 'Манчестер' in match['team1'] or 'Манчестер' in match['team2']:
-            spravka = "Английский топ-клуб против ливерпульской команды"
-        else:
-            spravka = f"{match['sport'].title()} матч высокого уровня"
-    elif match['sport'] == 'basketball':
-        spravka = f"Баскетбольный матч, {match['quarter']}-й квартал"
-    else:
-        spravka = f"{match['sport'].title()} матч"
-    
-    # Формируем рекомендацию
-    if analysis_result['recommendation']:
-        if match['sport'] == 'football':
-            if 'Барселона' in analysis_result['recommendation']:
-                recommendation = "П1 (1.1)"
-            elif 'Манчестер' in analysis_result['recommendation']:
-                recommendation = "П1 (1.2)"
-            else:
-                recommendation = "П1 (1.3)"
-        elif match['sport'] == 'basketball':
-            recommendation = "П1 (1.4)"
-        else:
-            recommendation = "П1 (1.5)"
-    else:
-        recommendation = "Анализ в процессе"
-    
-    # Формируем ссылку
-    bet_url = f"https://betboom.ru/event/{hash(match['team1'] + match['team2']) % 100000000}"
+    """Форматирует сообщение для Telegram"""
+    sport_emoji = {'football': '⚽', 'basketball': '🏀'}.get(match['sport'], '🏆')
     
     message = f"""
-{emoji} <b>{bet_type}:</b>
-{match['team1']} vs {match['team2']} - {match['score']}, {time_info}
+🎯 <b>TrueLiveBet - Найден подходящий матч!</b>
 
-📊 <b>СПРАВКА:</b> {spravka}
+{sport_emoji} <b>Вид спорта:</b> {match['sport'].title()}
+🏆 <b>Матч:</b> {match['team1']} vs {match['team2']}
+📊 <b>Счет:</b> {match['score']}
+⏰ <b>Время:</b> {match['time'] or f"Квартал {match['quarter']}"}
+📈 <b>Уверенность:</b> {analysis_result['confidence']}%
 
-🔗 <b>{recommendation}:</b> {bet_url}
+💡 <b>Рекомендация:</b> {analysis_result['recommendation'] or 'Анализ в процессе'}
+
+🔍 <b>Обоснование:</b>
 """
+    
+    for reason in analysis_result['reasoning']:
+        message += f"• {reason}\n"
+    
+    if not analysis_result['reasoning']:
+        message += "• Недостаточно данных для рекомендации\n"
+    
+    message += f"\n⏰ <i>Анализ: {datetime.now().strftime('%H:%M:%S')}</i>"
     
     return message
 
