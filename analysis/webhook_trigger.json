@@ -1,0 +1,24 @@
+{
+  "trigger_id": "webhook_20250817_150000",
+  "timestamp": "2025-08-17T15:00:00+03:00",
+  "action": "telegram_notification",
+  "status": "pending",
+  "source": "betboom_live_analysis",
+  "files": [
+    "live_analysis_results.md",
+    "live_analysis_data.json"
+  ],
+  "analysis_summary": {
+    "total_matches": 132,
+    "high_risk_matches": 2,
+    "ideal_matches": 1,
+    "excellent_matches": 1,
+    "sports_covered": ["Футбол", "Теннис", "Баскетбол", "Хоккей"]
+  },
+  "telegram_config": {
+    "channel_id": "@truelivebet",
+    "notification_type": "live_analysis_results",
+    "priority": "high"
+  },
+  "next_action": "send_telegram_notification"
+}
