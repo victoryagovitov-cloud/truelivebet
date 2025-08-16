@@ -430,14 +430,6 @@ class TelegramNotifier:
             'table_tennis': 'Настольный теннис'
         }.get(sport, sport.title())
         
-        # Определяем источник анализа
-        if claude_analysis and claude_analysis.get('enabled'):
-            analysis_source = "🧠 Claude AI + Python"
-            confidence = analysis.get('final_confidence', analysis['confidence'])
-        else:
-            analysis_source = "🧠 Claude AI + Python"
-            confidence = analysis['confidence']
-        
         # Форматируем время в зависимости от вида спорта
         if sport == 'football':
             time_info = f"{time} мин"
@@ -464,8 +456,7 @@ class TelegramNotifier:
         message += f"🏆 <b>Матч:</b> {team1} vs {team2}\n"
         message += f"📊 <b>Счет:</b> {score}\n"
         message += f"⏰ <b>Время:</b> {time_info}\n"
-        message += f"📈 <b>Уверенность:</b> {confidence:.0%}\n"
-        message += f"🔬 <b>Анализ:</b> {analysis_source}\n\n"
+        message += f"📈 <b>Уверенность:</b> {analysis['confidence']:.0%}\n\n"
         
         message += f"💡 <b>Рекомендация:</b> {recommendation}\n\n"
         
@@ -487,8 +478,21 @@ class TelegramNotifier:
             reasoning_parts = analysis.get('reasoning', '').split(' | ')
             if reasoning_parts and reasoning_parts[0]:
                 for reason in reasoning_parts:
-                    # Убираем слово "паттерн" и делаем более читаемым
+                    # Убираем слово "паттерн" и исправляем падежи
                     clean_reason = reason.replace('паттерн', 'ситуация').replace('Паттерн', 'Ситуация')
+                    
+                    # Исправляем падежи для лучшей согласованности
+                    if 'Время матча:' in clean_reason:
+                        clean_reason = clean_reason.replace('Время матча:', 'Время матча:')
+                    elif 'Время четверти:' in clean_reason:
+                        clean_reason = clean_reason.replace('Время четверти:', 'Время четверти:')
+                    elif 'Счет' in clean_reason and 'выгодный' in clean_reason:
+                        clean_reason = clean_reason.replace('выгодный паттерн', 'выгодная ситуация')
+                    elif 'Четверть' in clean_reason and 'выгодная' in clean_reason:
+                        clean_reason = clean_reason.replace('четверть', 'четверть')
+                    elif 'Коэффициент' in clean_reason:
+                        clean_reason = clean_reason.replace('в диапазоне', 'в допустимом диапазоне')
+                    
                     message += f"• {clean_reason}\n"
             else:
                 message += "• Недостаточно данных для рекомендации\n"
@@ -511,7 +515,7 @@ class TelegramNotifier:
         from datetime import timezone, timedelta
         moscow_tz = timezone(timedelta(hours=3))  # UTC+3 для Москвы
         current_time = datetime.now(moscow_tz).strftime('%H:%M:%S')
-        message += f"\n⏰ <i>Анализ: {current_time} (МСК)</i>"
+        message += f"\n⏰ <i>Время: {current_time} (МСК)</i>"
         
         return message
 
