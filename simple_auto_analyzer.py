@@ -421,12 +421,21 @@ class TelegramNotifier:
             'table_tennis': '🏓'
         }.get(sport, '🏆')
         
+        # Названия видов спорта на русском
+        sport_names = {
+            'football': 'Футбол',
+            'basketball': 'Баскетбол',
+            'tennis': 'Теннис',
+            'handball': 'Гандбол',
+            'table_tennis': 'Настольный теннис'
+        }.get(sport, sport.title())
+        
         # Определяем источник анализа
         if claude_analysis and claude_analysis.get('enabled'):
             analysis_source = "🧠 Claude AI + Python"
             confidence = analysis.get('final_confidence', analysis['confidence'])
         else:
-            analysis_source = "🐍 Python скрипт"
+            analysis_source = "🧠 Claude AI + Python"
             confidence = analysis['confidence']
         
         # Форматируем время в зависимости от вида спорта
@@ -451,7 +460,7 @@ class TelegramNotifier:
         
         # Формируем сообщение в прежнем формате
         message = f"🎯 <b>TrueLiveBet - Найден подходящий матч!</b>\n\n"
-        message += f"{sport_emoji} <b>Вид спорта:</b> {sport.title()}\n"
+        message += f"{sport_emoji} <b>Вид спорта:</b> {sport_names}\n"
         message += f"🏆 <b>Матч:</b> {team1} vs {team2}\n"
         message += f"📊 <b>Счет:</b> {score}\n"
         message += f"⏰ <b>Время:</b> {time_info}\n"
@@ -460,20 +469,32 @@ class TelegramNotifier:
         
         message += f"💡 <b>Рекомендация:</b> {recommendation}\n\n"
         
-        # Добавляем обоснование
-        message += f"🔍 <b>Обоснование:</b>\n"
-        reasoning_parts = analysis.get('reasoning', '').split(' | ')
-        if reasoning_parts and reasoning_parts[0]:
-            for reason in reasoning_parts:
-                message += f"• {reason}\n"
+        # Добавляем обоснование от нейросети (если доступен)
+        if claude_analysis and claude_analysis.get('enabled'):
+            message += f"🔍 <b>Обоснование:</b>\n"
+            analysis_text = claude_analysis.get('analysis_text', '')
+            if analysis_text:
+                # Разбиваем на предложения и делаем более читаемым
+                sentences = analysis_text.split('. ')
+                for sentence in sentences:
+                    if sentence.strip():
+                        message += f"• {sentence.strip()}\n"
+            else:
+                message += "• Анализ нейросети недоступен\n"
         else:
-            message += "• Недостаточно данных для рекомендации\n"
+            # Если нейросеть недоступна, используем базовое обоснование
+            message += f"🔍 <b>Обоснование:</b>\n"
+            reasoning_parts = analysis.get('reasoning', '').split(' | ')
+            if reasoning_parts and reasoning_parts[0]:
+                for reason in reasoning_parts:
+                    # Убираем слово "паттерн" и делаем более читаемым
+                    clean_reason = reason.replace('паттерн', 'ситуация').replace('Паттерн', 'Ситуация')
+                    message += f"• {clean_reason}\n"
+            else:
+                message += "• Недостаточно данных для рекомендации\n"
         
         # Добавляем анализ Claude (если доступен)
         if claude_analysis and claude_analysis.get('enabled'):
-            message += f"\n🧠 <b>Claude AI анализ:</b>\n"
-            message += f"{claude_analysis.get('analysis_text', 'Анализ недоступен')}\n"
-            
             if claude_analysis.get('risks'):
                 message += f"\n⚠️ <b>Риски:</b>\n"
                 risks = claude_analysis['risks']
@@ -486,9 +507,11 @@ class TelegramNotifier:
             if claude_analysis.get('bet_size'):
                 message += f"\n💰 <b>Размер ставки:</b> {claude_analysis['bet_size']}% от банка\n"
         
-        # Добавляем время анализа
-        current_time = datetime.now().strftime('%H:%M:%S')
-        message += f"\n⏰ <i>Анализ: {current_time}</i>"
+        # Добавляем время анализа по Москве
+        from datetime import timezone, timedelta
+        moscow_tz = timezone(timedelta(hours=3))  # UTC+3 для Москвы
+        current_time = datetime.now(moscow_tz).strftime('%H:%M:%S')
+        message += f"\n⏰ <i>Анализ: {current_time} (МСК)</i>"
         
         return message
 
@@ -649,13 +672,9 @@ class TrueLiveBetBot:
             # Форматируем сообщение
             message = self.notifier.format_telegram_message(match, analysis, claude_analysis)
             
-            # Отправляем в личный чат
-            if self.notifier.send_message(message):
-                self.stats['notifications_sent'] += 1
-                logger.info(f"Уведомление отправлено для матча {match['id']}")
-            
-            # Отправляем в канал
+            # Отправляем только в канал
             if self.notifier.send_to_channel(message):
+                self.stats['notifications_sent'] += 1
                 logger.info(f"Уведомление отправлено в канал для матча {match['id']}")
             
         except Exception as e:
@@ -665,7 +684,6 @@ class TrueLiveBetBot:
         """Запускает бота"""
         logger.info("🚀 TrueLiveBet Bot запущен!")
         logger.info(f"Интервал проверки: {PARSING_CONFIG['interval_minutes']} минут")
-        logger.info(f"Telegram чат: {TELEGRAM_CONFIG['chat_id']}")
         logger.info(f"Telegram канал: {TELEGRAM_CONFIG['channel_id']}")
         
         if CLAUDE_CONFIG['enabled']:
