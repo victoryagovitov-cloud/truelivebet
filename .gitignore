@@ -1,0 +1,51 @@
+# Игнорируемые файлы для TrueLiveBet
+
+# Временные файлы
+*.tmp
+*.temp
+*.log
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE файлы
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Конфиденциальные данные
+config.ini
+secrets.json
+*.key
+*.pem
+
+# Логи и отладочная информация
+logs/
+debug/
+*.log
+
+# Кэш и временные данные
+cache/
+temp/
+tmp/
+
+# Зависимости (если будут)
+node_modules/
+venv/
+__pycache__/
+*.pyc
+
+# Бинарные файлы
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Архивы
+*.zip
+*.rar
+*.7z
+*.tar.gz
