@@ -13,6 +13,14 @@ from datetime import datetime
 import os
 import re
 
+# Импортируем Claude анализатор
+try:
+    from claude_analyzer import ClaudeAnalyzer
+    CLAUDE_AVAILABLE = True
+except ImportError:
+    CLAUDE_AVAILABLE = False
+    print("⚠️ Claude анализатор недоступен. Работаем только с Python скриптом.")
+
 # Конфигурация
 TELEGRAM_CONFIG = {
     'bot_token': '7824400107:AAGZqPdS0E0N3HsYpD8TW9m8c-bapFd-RHk',
@@ -175,6 +183,14 @@ def format_telegram_message(match, analysis_result):
     """Форматирует сообщение для Telegram"""
     sport_emoji = {'football': '⚽', 'basketball': '🏀'}.get(match['sport'], '🏆')
     
+    # Определяем источник анализа
+    if analysis_result.get('claude_enhanced'):
+        analysis_source = "🧠 Claude AI + Python"
+        confidence = analysis_result.get('final_confidence', analysis_result['confidence'])
+    else:
+        analysis_source = "🐍 Python скрипт"
+        confidence = analysis_result['confidence']
+    
     message = f"""
 🎯 <b>TrueLiveBet - Найден подходящий матч!</b>
 
@@ -182,7 +198,8 @@ def format_telegram_message(match, analysis_result):
 🏆 <b>Матч:</b> {match['team1']} vs {match['team2']}
 📊 <b>Счет:</b> {match['score']}
 ⏰ <b>Время:</b> {match['time'] or f"Четверть {match['quarter']}"}
-📈 <b>Уверенность:</b> {analysis_result['confidence']}%
+📈 <b>Уверенность:</b> {confidence}%
+🔬 <b>Анализ:</b> {analysis_source}
 
 💡 <b>Рекомендация:</b> {analysis_result['recommendation'] or 'Анализ в процессе'}
 
@@ -195,11 +212,24 @@ def format_telegram_message(match, analysis_result):
     if not analysis_result['reasoning']:
         message += "• Недостаточно данных для рекомендации\n"
     
+    # Добавляем Claude анализ если есть
+    if analysis_result.get('claude_enhanced'):
+        message += f"\n🧠 <b>Claude AI анализ:</b>\n"
+        message += f"{analysis_result.get('claude_analysis_text', '')}\n"
+        
+        if analysis_result.get('claude_risks'):
+            message += f"\n⚠️ <b>Риски:</b>\n"
+            for risk in analysis_result['claude_risks']:
+                message += f"• {risk}\n"
+        
+        if analysis_result.get('claude_bet_size'):
+            message += f"\n💰 <b>Размер ставки:</b> {analysis_result['claude_bet_size']}% от банка\n"
+    
     message += f"\n⏰ <i>Анализ: {datetime.now().strftime('%H:%M:%S')}</i>"
     
     return message
 
-def check_matches():
+def check_matches(claude_analyzer=None):
     """Проверяет матчи и анализирует их"""
     print(f"🔍 Проверка матчей в {datetime.now().strftime('%H:%M:%S')}...")
     
@@ -233,6 +263,17 @@ def check_matches():
             print(f"📈 Уверенность: {analysis_result['confidence']}%")
             print(f"💡 Рекомендация: {analysis_result['recommendation']}")
             
+            # Улучшаем анализ через Claude если доступен
+            if CLAUDE_AVAILABLE and claude_analyzer:
+                print("🧠 Получаю углубленный анализ от Claude...")
+                enhanced_analysis = claude_analyzer.get_enhanced_recommendation(match, analysis_result)
+                
+                if enhanced_analysis.get('claude_enhanced'):
+                    print(f"✅ Claude анализ получен! Уверенность: {enhanced_analysis.get('claude_confidence')}%")
+                    analysis_result = enhanced_analysis
+                else:
+                    print("⚠️ Claude анализ недоступен, используем Python анализ")
+            
             # Отправляем уведомление если нужно
             if analysis_result['should_notify']:
                 print("🔔 Отправляю уведомление...")
@@ -255,10 +296,19 @@ def check_matches():
 
 def main():
     """Основная функция"""
-    print("🎯 TrueLiveBet - Простой автоматический анализатор")
+    print("🎯 TrueLiveBet - Гибридный автоматический анализатор")
     print("=" * 50)
     print(f"⏰ Периодичность проверки: {PARSING_CONFIG['interval_minutes']} минут")
     print(f"📱 Telegram Chat ID: {TELEGRAM_CONFIG['chat_id']}")
+    
+    # Инициализируем Claude анализатор
+    if CLAUDE_AVAILABLE:
+        claude_analyzer = ClaudeAnalyzer()
+        print("🧠 Claude AI: Доступен для углубленного анализа")
+    else:
+        claude_analyzer = None
+        print("🧠 Claude AI: Недоступен (работаем только с Python)")
+    
     print("=" * 50)
     
     # Отправляем приветственное сообщение
@@ -281,7 +331,7 @@ def main():
     try:
         while True:
             # Проверяем матчи
-            check_matches()
+            check_matches(claude_analyzer)
             
             # Ждем до следующей проверки
             wait_time = PARSING_CONFIG['interval_minutes'] * 60

@@ -10,6 +10,15 @@ TELEGRAM_CONFIG = {
     'bot_username': 'TrueLiveBetBot'     # Имя вашего бота
 }
 
+# Claude API настройки
+CLAUDE_CONFIG = {
+    'api_key': 'YOUR_CLAUDE_API_KEY_HERE',  # Замените на ваш ключ
+    'model': 'claude-3-sonnet-20240229',    # Модель Claude
+    'max_tokens': 1000,                      # Максимум токенов в ответе
+    'temperature': 0.3,                       # Творческость (0.0-1.0)
+    'enabled': False                          # Включить/выключить Claude
+}
+
 # Настройки парсинга
 PARSING_CONFIG = {
     'interval_minutes': 30,               # Периодичность парсинга (30 минут)
