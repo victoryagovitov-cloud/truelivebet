@@ -1,0 +1,33 @@
+name: Telegram Bot Auto-Sender
+
+on:
+  push:
+    paths:
+      - 'analysis/**'
+      - 'recommendations/**'
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  send-analysis:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        pip install python-telegram-bot requests
+        
+    - name: Send analysis to Telegram
+      env:
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+      run: |
+        python .github/scripts/send_analysis.py
