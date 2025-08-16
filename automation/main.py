@@ -13,6 +13,7 @@ from loguru import logger
 from betboom_scraper import BetBoomScraper
 from ai_analyzer import AIAnalyzer
 from telegram_bot import TrueLiveBetBot
+from channel_publisher import ChannelPublisher
 
 class TrueLiveBetAutomation:
     """Главный класс автоматизации TrueLiveBet"""
@@ -66,10 +67,15 @@ class TrueLiveBetAutomation:
             )
             logger.info("AI анализатор инициализирован")
             
-            # Инициализируем Telegram бота
-            if self.config.get('telegram_token'):
-                self.bot = TrueLiveBetBot(self.config['telegram_token'])
-                logger.info("Telegram бот инициализирован")
+                    # Инициализируем Telegram бота
+        if self.config.get('telegram_token'):
+            self.bot = TrueLiveBetBot(self.config['telegram_token'])
+            logger.info("Telegram бот инициализирован")
+            
+            # Инициализируем издатель канала
+            if self.config.get('telegram_channel_id'):
+                self.channel_publisher = ChannelPublisher(self.bot, self.config['telegram_channel_id'])
+                logger.info(f"Издатель канала инициализирован: {self.config['telegram_channel_id']}")
             
             logger.info("Все компоненты инициализированы успешно!")
             
@@ -133,9 +139,13 @@ class TrueLiveBetAutomation:
             filtered_analyses = self._filter_analyses(analyses)
             logger.info(f"Отфильтровано {len(filtered_analyses)} анализов")
             
-            # 4. Отправка результатов в Telegram
-            if self.bot and filtered_analyses:
-                await self._send_analyses(filtered_analyses)
+                    # 4. Отправка результатов в Telegram
+        if self.bot and filtered_analyses:
+            await self._send_analyses(filtered_analyses)
+            
+            # 5. Публикация в канал
+            if hasattr(self, 'channel_publisher') and filtered_analyses:
+                await self._publish_to_channel(filtered_analyses)
             
             # Обновляем статистику
             self.stats['matches_analyzed'] += len(matches)
@@ -251,11 +261,36 @@ class TrueLiveBetAutomation:
         except Exception as e:
             logger.error(f"Ошибка отправки анализов: {e}")
     
-    def _get_active_chats(self) -> List[int]:
-        """Получение списка активных чатов"""
-        # Пока что возвращаем тестовый чат
-        # В реальности нужно хранить список активных пользователей
-        return [self.config.get('test_chat_id', 123456789)]
+    async def _publish_to_channel(self, analyses: List):
+        """Публикация анализов в Telegram канал"""
+        try:
+            if not hasattr(self, 'channel_publisher'):
+                logger.warning("Издатель канала не инициализирован")
+                return
+            
+            # Публикуем анализы в канал
+            results = await self.channel_publisher.publish_batch(analyses)
+            logger.info(f"📢 Публикация в канал завершена: {results}")
+            
+            # Публикуем сводку
+            await self.channel_publisher.publish_summary(analyses)
+            
+        except Exception as e:
+            logger.error(f"Ошибка публикации в канал: {e}")
+    
+    def _get_active_chats(self) -> List[str]:
+        """Получение списка активных чатов и каналов"""
+        chats = []
+        
+        # Добавляем основной канал для публикации
+        if self.config.get('telegram_channel_id'):
+            chats.append(self.config['telegram_channel_id'])
+        
+        # Добавляем тестовый чат (если указан)
+        if self.config.get('test_chat_id'):
+            chats.append(self.config['test_chat_id'])
+        
+        return chats
     
     async def stop_automation(self):
         """Остановка автоматизации"""

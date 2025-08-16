@@ -14,6 +14,9 @@ TELEGRAM_BOT_TOKEN = "7824400107:AAGZqPdS0E0N3HsYpD8TW9m8c-bapFd-RHk"
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')  # None если не указан
 ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY')  # None если не указан
 
+# Telegram канал для публикации прогнозов
+TELEGRAM_CHANNEL_ID = "@truelivebet"
+
 # Тестовый чат ID (замени на свой)
 TEST_CHAT_ID = 123456789
 
@@ -37,6 +40,7 @@ def get_config() -> Dict:
     """Получение конфигурации в виде словаря"""
     return {
         'telegram_token': TELEGRAM_BOT_TOKEN,
+        'telegram_channel_id': TELEGRAM_CHANNEL_ID,
         'openai_api_key': OPENAI_API_KEY,
         'anthropic_api_key': ANTHROPIC_API_KEY,
         'test_chat_id': TEST_CHAT_ID,
