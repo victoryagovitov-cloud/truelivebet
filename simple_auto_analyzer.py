@@ -125,7 +125,7 @@ def analyze_basketball_match(team1, team2, score, quarter):
             confidence = 70
             recommendation = f"Победа {favorite}"
             reasoning.append(f"Отрыв {point_difference} очков")
-            reasoning.append(f"Квартал: {quarter}")
+            reasoning.append(f"Четверть: {quarter}")
         
         return {
             'confidence': confidence,
@@ -181,7 +181,7 @@ def format_telegram_message(match, analysis_result):
 {sport_emoji} <b>Вид спорта:</b> {match['sport'].title()}
 🏆 <b>Матч:</b> {match['team1']} vs {match['team2']}
 📊 <b>Счет:</b> {match['score']}
-⏰ <b>Время:</b> {match['time'] or f"Квартал {match['quarter']}"}
+⏰ <b>Время:</b> {match['time'] or f"Четверть {match['quarter']}"}
 📈 <b>Уверенность:</b> {analysis_result['confidence']}%
 
 💡 <b>Рекомендация:</b> {analysis_result['recommendation'] or 'Анализ в процессе'}
