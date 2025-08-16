@@ -186,7 +186,7 @@ def main():
     
     # Проверяем основной анализ
     try:
-        analysis_file = 'analysis/live_analysis_data.json'
+        analysis_file = 'recommendations/live_analysis_test.json'
         
         if os.path.exists(analysis_file):
             with open(analysis_file, 'r', encoding='utf-8') as f:
