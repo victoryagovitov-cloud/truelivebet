@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueLiveBet - Анализ ставок</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-bullseye"></i>
+                <h1>TrueLiveBet</h1>
+            </div>
+            <p class="tagline">Честный анализ лайв-ставок</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Analysis Form -->
+            <section class="analysis-section">
+                <h2><i class="fas fa-chart-line"></i> Анализ матча</h2>
+                
+                <form id="analysisForm" class="analysis-form">
+                    <div class="form-group">
+                        <label for="sportType">Вид спорта:</label>
+                        <select id="sportType" name="sportType" required>
+                            <option value="">Выберите вид спорта</option>
+                            <option value="football">⚽ Футбол</option>
+                            <option value="tennis">🎾 Теннис</option>
+                            <option value="basketball">🏀 Баскетбол</option>
+                            <option value="handball">🤾 Гандбол</option>
+                            <option value="tabletennis">🏓 Настольный теннис</option>
+                        </select>
+                    </div>
+
+                    <!-- Football Fields -->
+                    <div id="footballFields" class="sport-fields" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="team1">Команда 1:</label>
+                                <input type="text" id="team1" name="team1" placeholder="Название команды">
+                            </div>
+                            <div class="form-group">
+                                <label for="team2">Команда 2:</label>
+                                <input type="text" id="team2" name="team2" placeholder="Название команды">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="score">Счет:</label>
+                                <input type="text" id="score" name="score" placeholder="2:1">
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Время матча:</label>
+                                <input type="text" id="time" name="time" placeholder="65'">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="control">Контроль мяча (%):</label>
+                                <input type="number" id="control" name="control" min="0" max="100" placeholder="65">
+                            </div>
+                            <div class="form-group">
+                                <label for="shots">Удары (в створ):</label>
+                                <input type="text" id="shots" name="shots" placeholder="8:2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tennis Fields -->
+                    <div id="tennisFields" class="sport-fields" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="player1">Игрок 1:</label>
+                                <input type="text" id="player1" name="player1" placeholder="Название игрока">
+                            </div>
+                            <div class="form-group">
+                                <label for="player2">Игрок 2:</label>
+                                <input type="text" id="player2" name="player2" placeholder="Название игрока">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sets">Сеты:</label>
+                            <input type="text" id="sets" name="sets" placeholder="6:2, 3:1">
+                        </div>
+                    </div>
+
+                    <!-- Basketball Fields -->
+                    <div id="basketballFields" class="sport-fields" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bbTeam1">Команда 1:</label>
+                                <input type="text" id="bbTeam1" name="bbTeam1" placeholder="Название команды">
+                            </div>
+                            <div class="form-group">
+                                <label for="bbTeam2">Команда 2:</label>
+                                <input type="text" id="bbTeam2" name="bbTeam2" placeholder="Название команды">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bbScore">Счет:</label>
+                                <input type="text" id="bbScore" name="bbScore" placeholder="85:65">
+                            </div>
+                            <div class="form-group">
+                                <label for="quarter">Квартал:</label>
+                                <select id="quarter" name="quarter">
+                                    <option value="1">1-й квартал</option>
+                                    <option value="2">2-й квартал</option>
+                                    <option value="3">3-й квартал</option>
+                                    <option value="4">4-й квартал</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="analyze-btn">
+                        <i class="fas fa-search"></i> Анализировать
+                    </button>
+                </form>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section" style="display: none;">
+                <h2><i class="fas fa-clipboard-check"></i> Результаты анализа</h2>
+                <div id="resultsContent" class="results-content">
+                    <!-- Results will be populated here -->
+                </div>
+            </section>
+
+            <!-- Strategies Section -->
+            <section class="strategies-section">
+                <h2><i class="fas fa-lightbulb"></i> Стратегии</h2>
+                <div id="strategiesContent" class="strategies-grid">
+                    <!-- Strategies will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Quick Tools -->
+            <section class="tools-section">
+                <h2><i class="fas fa-tools"></i> Быстрые инструменты</h2>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Калькулятор тотала</h3>
+                        <p>Для гандбола и других видов спорта</p>
+                        <button onclick="openTotalCalculator()" class="tool-btn">Открыть</button>
+                    </div>
+                    <div class="tool-card">
+                        <i class="fas fa-percentage"></i>
+                        <h3>Банкролл-менеджер</h3>
+                        <p>Расчет размера ставки</p>
+                        <button onclick="openBankrollManager()" class="tool-btn">Открыть</button>
+                    </div>
+                    <div class="tool-card">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Статистика</h3>
+                        <p>История ставок и результаты</p>
+                        <button onclick="openStatistics()" class="tool-btn">Открыть</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 TrueLiveBet. Создано с ❤️ для честного беттинга</p>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="totalCalculatorModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Калькулятор тотала (гандбол)</h2>
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="currentScore">Текущий счет:</label>
+                    <input type="text" id="currentScore" placeholder="15:20">
+                </div>
+                <div class="form-group">
+                    <label for="elapsedTime">Прошедшие минуты:</label>
+                    <input type="number" id="elapsedTime" placeholder="45">
+                </div>
+                <div class="form-group">
+                    <label for="remainingTime">Оставшиеся минуты:</label>
+                    <input type="number" id="remainingTime" placeholder="15">
+                </div>
+                <button onclick="calculateTotal()" class="calculate-btn">Рассчитать</button>
+                <div id="totalResult" class="total-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bankrollModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Банкролл-менеджер</h2>
+            <div class="bankroll-form">
+                <div class="form-group">
+                    <label for="totalBankroll">Общий банкролл (₽):</label>
+                    <input type="number" id="totalBankroll" placeholder="10000">
+                </div>
+                <div class="form-group">
+                    <label for="confidenceLevel">Уровень уверенности:</label>
+                    <select id="confidenceLevel">
+                        <option value="1">👍 Базовый (1%)</option>
+                        <option value="1.5">⭐ Средний (1.5%)</option>
+                        <option value="2">🎯 Высокий (2%)</option>
+                        <option value="2.5">💀 Максимальный (2.5%)</option>
+                    </select>
+                </div>
+                <button onclick="calculateBetSize()" class="calculate-btn">Рассчитать</button>
+                <div id="betSizeResult" class="bet-size-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
