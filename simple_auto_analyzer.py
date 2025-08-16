@@ -21,7 +21,7 @@ TELEGRAM_CONFIG = {
 }
 
 PARSING_CONFIG = {
-    'interval_minutes': 30,
+    'interval_minutes': 2,  # Изменили на 2 минуты для тестирования
     'betboom_url': 'https://betboom.ru',
     'max_matches_per_check': 10,
     'timeout_seconds': 30
