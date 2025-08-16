@@ -231,22 +231,16 @@ class MatchAnalyzer:
         if self.criteria['football']['min_time'] <= time <= self.criteria['football']['max_time']:
             confidence += 0.3
             reasoning.append(f"Время матча: {time} мин")
-        else:
-            reasoning.append(f"Время матча: {time} мин")
         
         # Счет
         if score in self.criteria['football']['score_patterns']:
             confidence += 0.4
-            reasoning.append(f"Счет {score} - выгодный паттерн")
-        else:
-            reasoning.append(f"Счет {score} - не выгодный паттерн")
+            reasoning.append(f"Счет {score} - выгодная ситуация")
         
         # Коэффициенты
         if '1' in odds and self.criteria['football']['min_odds'] <= odds['1'] <= self.criteria['football']['max_odds']:
             confidence += 0.2
             reasoning.append(f"Коэффициент П1: {odds['1']}")
-        else:
-            reasoning.append(f"Коэффициент П1: {odds.get('1', 'N/A')}")
         
         # Рейтинги команд (если доступны)
         if rankings:
@@ -284,22 +278,16 @@ class MatchAnalyzer:
         if self.criteria['basketball']['min_time'] <= time <= self.criteria['basketball']['max_time']:
             confidence += 0.3
             reasoning.append(f"Время четверти: {time} мин")
-        else:
-            reasoning.append(f"Время четверти: {time} мин")
         
         # Четверть
         if str(quarter) in self.criteria['basketball']['quarter_patterns']:
             confidence += 0.3
             reasoning.append(f"Четверть {quarter} - выгодная")
-        else:
-            reasoning.append(f"Четверть {quarter} - не выгодная")
         
         # Счет
         if score in self.criteria['basketball']['score_patterns']:
             confidence += 0.3
-            reasoning.append(f"Счет {score} - выгодный паттерн")
-        else:
-            reasoning.append(f"Счет {score} - не выгодный паттерн")
+            reasoning.append(f"Счет {score} - выгодная ситуация")
         
         # Коэффициенты
         if '1' in odds and self.criteria['basketball']['min_odds'] <= odds['1'] <= self.criteria['basketball']['max_odds']:
@@ -332,16 +320,12 @@ class MatchAnalyzer:
         # Сеты
         if sets in self.criteria['tennis']['set_patterns']:
             confidence += 0.4
-            reasoning.append(f"Сеты {sets} - выгодный паттерн")
-        else:
-            reasoning.append(f"Сеты {sets} - не выгодный паттерн")
+            reasoning.append(f"Сеты {sets} - выгодная ситуация")
         
         # Счет
         if score in self.criteria['tennis']['score_patterns']:
             confidence += 0.3
-            reasoning.append(f"Счет {score} - выгодный паттерн")
-        else:
-            reasoning.append(f"Счет {score} - не выгодный паттерн")
+            reasoning.append(f"Счет {score} - выгодная ситуация")
         
         # Коэффициенты
         if '1' in odds and self.criteria['tennis']['min_odds'] <= odds['1'] <= self.criteria['tennis']['max_odds']:
@@ -482,19 +466,10 @@ class TelegramNotifier:
                     clean_reason = reason.replace('паттерн', 'ситуация').replace('Паттерн', 'Ситуация')
                     
                     # Исправляем падежи для лучшей согласованности
-                    if 'Счет' in clean_reason and 'выгодный' in clean_reason:
-                        clean_reason = clean_reason.replace('выгодный паттерн', 'выгодная ситуация')
-                        clean_reason = clean_reason.replace('выгодный', 'выгодная')
-                    elif 'Счет' in clean_reason and 'выгодная' in clean_reason:
+                    if 'Счет' in clean_reason and 'выгодная' in clean_reason:
                         clean_reason = clean_reason.replace('выгодная ситуация', 'выгодная ситуация')
                     elif 'Четверть' in clean_reason and 'выгодная' in clean_reason:
                         clean_reason = clean_reason.replace('четверть', 'четверть')
-                    
-                    # Дополнительные исправления падежей
-                    if 'не выгодный' in clean_reason:
-                        clean_reason = clean_reason.replace('не выгодный', 'не выгодная')
-                    if 'не выгодная' in clean_reason:
-                        clean_reason = clean_reason.replace('не выгодная', 'не выгодная')
                     
                     message += f"• {clean_reason}\n"
             else:
