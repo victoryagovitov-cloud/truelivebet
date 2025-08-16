@@ -230,9 +230,9 @@ class MatchAnalyzer:
         # Время матча
         if self.criteria['football']['min_time'] <= time <= self.criteria['football']['max_time']:
             confidence += 0.3
-            reasoning.append(f"Время матча: {time} мин (оптимально)")
+            reasoning.append(f"Время матча: {time} мин (оптимальное время)")
         else:
-            reasoning.append(f"Время матча: {time} мин (не оптимально)")
+            reasoning.append(f"Время матча: {time} мин (не оптимальное время)")
         
         # Счет
         if score in self.criteria['football']['score_patterns']:
@@ -244,7 +244,7 @@ class MatchAnalyzer:
         # Коэффициенты
         if '1' in odds and self.criteria['football']['min_odds'] <= odds['1'] <= self.criteria['football']['max_odds']:
             confidence += 0.2
-            reasoning.append(f"Коэффициент П1: {odds['1']} (в диапазоне)")
+            reasoning.append(f"Коэффициент П1: {odds['1']} (в допустимом диапазоне)")
         else:
             reasoning.append(f"Коэффициент П1: {odds.get('1', 'N/A')} (не в диапазоне)")
         
@@ -283,9 +283,9 @@ class MatchAnalyzer:
         # Время четверти
         if self.criteria['basketball']['min_time'] <= time <= self.criteria['basketball']['max_time']:
             confidence += 0.3
-            reasoning.append(f"Время четверти: {time} мин (оптимально)")
+            reasoning.append(f"Время четверти: {time} мин (оптимальное время)")
         else:
-            reasoning.append(f"Время четверти: {time} мин (не оптимально)")
+            reasoning.append(f"Время четверти: {time} мин (не оптимальное время)")
         
         # Четверть
         if str(quarter) in self.criteria['basketball']['quarter_patterns']:
@@ -304,7 +304,7 @@ class MatchAnalyzer:
         # Коэффициенты
         if '1' in odds and self.criteria['basketball']['min_odds'] <= odds['1'] <= self.criteria['basketball']['max_odds']:
             confidence += 0.1
-            reasoning.append(f"Коэффициент П1: {odds['1']} (в диапазоне)")
+            reasoning.append(f"Коэффициент П1: {odds['1']} (в допустимом диапазоне)")
         
         # Определяем рекомендацию
         if confidence >= 0.7:
@@ -346,7 +346,7 @@ class MatchAnalyzer:
         # Коэффициенты
         if '1' in odds and self.criteria['tennis']['min_odds'] <= odds['1'] <= self.criteria['tennis']['max_odds']:
             confidence += 0.3
-            reasoning.append(f"Коэффициент П1: {odds['1']} (в диапазоне)")
+            reasoning.append(f"Коэффициент П1: {odds['1']} (в допустимом диапазоне)")
         
         # Определяем рекомендацию
         if confidence >= 0.7:
@@ -483,15 +483,28 @@ class TelegramNotifier:
                     
                     # Исправляем падежи для лучшей согласованности
                     if 'Время матча:' in clean_reason:
-                        clean_reason = clean_reason.replace('Время матча:', 'Время матча:')
+                        if 'оптимально' in clean_reason:
+                            clean_reason = clean_reason.replace('(оптимально)', '(оптимальное время)')
                     elif 'Время четверти:' in clean_reason:
-                        clean_reason = clean_reason.replace('Время четверти:', 'Время четверти:')
+                        if 'оптимально' in clean_reason:
+                            clean_reason = clean_reason.replace('(оптимально)', '(оптимальное время)')
                     elif 'Счет' in clean_reason and 'выгодный' in clean_reason:
                         clean_reason = clean_reason.replace('выгодный паттерн', 'выгодная ситуация')
+                        clean_reason = clean_reason.replace('выгодный', 'выгодная')
+                    elif 'Счет' in clean_reason and 'выгодная' in clean_reason:
+                        clean_reason = clean_reason.replace('выгодная ситуация', 'выгодная ситуация')
                     elif 'Четверть' in clean_reason and 'выгодная' in clean_reason:
                         clean_reason = clean_reason.replace('четверть', 'четверть')
                     elif 'Коэффициент' in clean_reason:
                         clean_reason = clean_reason.replace('в диапазоне', 'в допустимом диапазоне')
+                    
+                    # Дополнительные исправления падежей
+                    if 'не оптимально' in clean_reason:
+                        clean_reason = clean_reason.replace('(не оптимально)', '(не оптимальное время)')
+                    if 'не выгодный' in clean_reason:
+                        clean_reason = clean_reason.replace('не выгодный', 'не выгодная')
+                    if 'не выгодная' in clean_reason:
+                        clean_reason = clean_reason.replace('не выгодная', 'не выгодная')
                     
                     message += f"• {clean_reason}\n"
             else:
