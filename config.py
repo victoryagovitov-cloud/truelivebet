@@ -5,7 +5,7 @@
 
 # Telegram Bot настройки
 TELEGRAM_CONFIG = {
-    'bot_token': 'YOUR_BOT_TOKEN_HERE',  # Замените на ваш токен
+    'bot_token': '7824400107:AAGZqPdS0E0N3HsYpD8TW9m8c-bapFd-RHk',  # Ваш токен
     'chat_id': 'YOUR_CHAT_ID_HERE',      # Замените на ваш chat_id
     'bot_username': 'TrueLiveBetBot'     # Имя вашего бота
 }
