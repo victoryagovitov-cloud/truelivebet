@@ -230,9 +230,9 @@ class MatchAnalyzer:
         # Время матча
         if self.criteria['football']['min_time'] <= time <= self.criteria['football']['max_time']:
             confidence += 0.3
-            reasoning.append(f"Время матча: {time} мин (оптимальное время)")
+            reasoning.append(f"Время матча: {time} мин")
         else:
-            reasoning.append(f"Время матча: {time} мин (не оптимальное время)")
+            reasoning.append(f"Время матча: {time} мин")
         
         # Счет
         if score in self.criteria['football']['score_patterns']:
@@ -283,9 +283,9 @@ class MatchAnalyzer:
         # Время четверти
         if self.criteria['basketball']['min_time'] <= time <= self.criteria['basketball']['max_time']:
             confidence += 0.3
-            reasoning.append(f"Время четверти: {time} мин (оптимальное время)")
+            reasoning.append(f"Время четверти: {time} мин")
         else:
-            reasoning.append(f"Время четверти: {time} мин (не оптимальное время)")
+            reasoning.append(f"Время четверти: {time} мин")
         
         # Четверть
         if str(quarter) in self.criteria['basketball']['quarter_patterns']:
@@ -482,13 +482,7 @@ class TelegramNotifier:
                     clean_reason = reason.replace('паттерн', 'ситуация').replace('Паттерн', 'Ситуация')
                     
                     # Исправляем падежи для лучшей согласованности
-                    if 'Время матча:' in clean_reason:
-                        if 'оптимально' in clean_reason:
-                            clean_reason = clean_reason.replace('(оптимально)', '(оптимальное время)')
-                    elif 'Время четверти:' in clean_reason:
-                        if 'оптимально' in clean_reason:
-                            clean_reason = clean_reason.replace('(оптимально)', '(оптимальное время)')
-                    elif 'Счет' in clean_reason and 'выгодный' in clean_reason:
+                    if 'Счет' in clean_reason and 'выгодный' in clean_reason:
                         clean_reason = clean_reason.replace('выгодный паттерн', 'выгодная ситуация')
                         clean_reason = clean_reason.replace('выгодный', 'выгодная')
                     elif 'Счет' in clean_reason and 'выгодная' in clean_reason:
@@ -497,8 +491,6 @@ class TelegramNotifier:
                         clean_reason = clean_reason.replace('четверть', 'четверть')
                     
                     # Дополнительные исправления падежей
-                    if 'не оптимально' in clean_reason:
-                        clean_reason = clean_reason.replace('(не оптимально)', '(не оптимальное время)')
                     if 'не выгодный' in clean_reason:
                         clean_reason = clean_reason.replace('не выгодный', 'не выгодная')
                     if 'не выгодная' in clean_reason:
