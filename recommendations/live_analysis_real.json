@@ -1,0 +1,54 @@
+{
+  "id": "analysis_real_001",
+  "total_matches": 42,
+  "sports_analyzed": ["football"],
+  "best_bets": [
+    {
+      "description": "Алавес vs Леванте - Ничья (15.92) - Золотая возможность!",
+      "confidence": 95,
+      "result": "1:1 (завершен)",
+      "profit_potential": "extreme"
+    },
+    {
+      "description": "Валенсия vs Реал С - Ничья (1.13) - Выгодный коэффициент",
+      "confidence": 90,
+      "result": "1:1 (завершен)",
+      "profit_potential": "high"
+    },
+    {
+      "description": "Спорт Ресифе vs Сан Пауло - П1 (2.0) - Интересный коэффициент",
+      "confidence": 75,
+      "result": "не начался",
+      "profit_potential": "medium"
+    }
+  ],
+  "timestamp": "2025-01-17T18:00:00",
+  "status": "completed",
+  "source": "betboom_live_analysis",
+  "analysis_summary": {
+    "completed_matches": 3,
+    "active_matches": 39,
+    "upcoming_matches": 15,
+    "total_opportunities": 8,
+    "high_confidence_bets": 3,
+    "medium_confidence_bets": 3,
+    "low_confidence_bets": 2
+  },
+  "league_analysis": {
+    "spain_liga": {
+      "matches": 2,
+      "trend": "high_draw_probability",
+      "best_opportunity": "ничьи на 90+ минуте"
+    },
+    "portugal_liga": {
+      "matches": 1,
+      "trend": "favorite_wins",
+      "best_opportunity": "ставки на фаворитов"
+    },
+    "brazil_serie_a": {
+      "matches": 2,
+      "trend": "competitive_odds",
+      "best_opportunity": "ставки на фаворитов с коэффициентами >1.5"
+    }
+  }
+}
