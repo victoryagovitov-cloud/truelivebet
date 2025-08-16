@@ -249,7 +249,7 @@ class TrueLiveBetHandler(http.server.SimpleHTTPRequestHandler):
         else:
             self.send_error(404, 'API endpoint не найден')
 
-def run_server(port=8080):
+def run_server(port=9000):
     """Запуск сервера"""
     with socketserver.TCPServer(("", port), TrueLiveBetHandler) as httpd:
         print(f"🎯 TrueLiveBet запущен на порту {port}")
