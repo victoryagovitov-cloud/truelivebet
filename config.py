@@ -1,94 +1,89 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Конфигурация для TrueLiveBet
+Конфигурация для TrueLiveBet Bot
 """
 
 # Telegram Bot настройки
 TELEGRAM_CONFIG = {
-    'bot_token': '7824400107:AAGZqPdS0E0N3HsYpD8TW9m8c-bapFd-RHk',  # Ваш токен
-    'chat_id': '678873745',              # Ваш личный Chat ID
-    'bot_username': 'TrueLiveBetBot'     # Имя вашего бота
-}
-
-# Claude API настройки
-CLAUDE_CONFIG = {
-    'api_key': 'YOUR_CLAUDE_API_KEY_HERE',  # Замените на ваш ключ
-    'model': 'claude-3-sonnet-20240229',    # Модель Claude
-    'max_tokens': 1000,                      # Максимум токенов в ответе
-    'temperature': 0.3,                       # Творческость (0.0-1.0)
-    'enabled': False                          # Включить/выключить Claude
+    'bot_token': '7824400107:AAGZqPdS0E0N3HsYpD8TW9m8c-bapFd-RHk',
+    'chat_id': '678873745',  # ID чата для уведомлений
+    'channel_id': '@truelivebet'  # ID канала
 }
 
 # Настройки парсинга
 PARSING_CONFIG = {
-    'interval_minutes': 30,               # Периодичность парсинга (30 минут)
-    'betboom_url': 'https://betboom.ru',  # URL BetBoom
-    'max_matches_per_check': 50,          # Максимум матчей за одну проверку
-    'timeout_seconds': 30                 # Таймаут для HTTP запросов
+    'interval_minutes': 2,  # Интервал проверки матчей (в минутах)
+    'max_matches_per_check': 20,  # Максимум матчей за одну проверку
+    'timeout_seconds': 30  # Таймаут для HTTP запросов
 }
 
-# Критерии анализа для разных видов спорта
+# Критерии анализа TrueLiveBet
 ANALYSIS_CRITERIA = {
     'football': {
-        'min_goal_difference': 2,         # Минимальная разница в голах
-        'min_control_percentage': 60,     # Минимальный контроль мяча
-        'min_time_elapsed': 60,           # Минимальное время матча (минуты)
-        'confidence_threshold': 75        # Порог уверенности для уведомления
-    },
-    'tennis': {
-        'min_set_difference': 1,          # Минимальная разница в сетах
-        'min_games_in_set': 4,            # Минимальное количество геймов в сете
-        'confidence_threshold': 70
+        'min_time': 15,  # Минимальное время матча для анализа
+        'max_time': 85,  # Максимальное время матча для анализа
+        'min_odds': 1.1,  # Минимальный коэффициент
+        'max_odds': 3.0,  # Максимальный коэффициент
+        'score_patterns': ['1:0', '2:0', '0:1', '0:2'],  # Выгодные счета
+        'time_patterns': ['75-85', '80-90']  # Выгодное время
     },
     'basketball': {
-        'min_point_difference': 15,       # Минимальная разница в очках
-        'min_quarter': 2,                 # Минимальный квартал для анализа
-        'confidence_threshold': 70
+        'min_time': 5,   # Минимальное время четверти
+        'max_time': 10,  # Максимальное время четверти
+        'min_odds': 1.1,
+        'max_odds': 2.5,
+        'score_patterns': ['15:10', '20:15', '25:20'],  # Выгодные счета
+        'quarter_patterns': ['1-3', '2-4']  # Выгодные четверти
     },
-    'handball': {
-        'min_goal_difference': 3,         # Минимальная разница в голах
-        'min_time_elapsed': 45,           # Минимальное время матча
-        'confidence_threshold': 75
+    'tennis': {
+        'min_games': 3,  # Минимальное количество геймов
+        'min_odds': 1.1,
+        'max_odds': 2.0,
+        'score_patterns': ['6:4', '7:5', '6:3'],  # Выгодные счета
+        'set_patterns': ['1-0', '2-0']  # Выгодные сеты
     }
 }
 
-# Источники данных
+# Источники данных (упрощенная система)
 DATA_SOURCES = {
-    'betboom': {
-        'live_url': 'https://betboom.ru/live',
-        'api_url': 'https://betboom.ru/api/live',
-        'headers': {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        }
+    'primary': {
+        'betboom_live': 'https://betboom.ru/live',  # Основной источник live матчей
+        'betboom_events': 'https://betboom.ru/events'  # События для деталей
     },
-    'scores24': {
-        'base_url': 'https://scores24.live',
-        'search_url': 'https://scores24.live/search'
-    },
-    '4score': {
-        'base_url': 'https://4score.ru',
-        'search_url': 'https://4score.ru/search'
+    'rankings': {
+        'transfermarkt': 'https://www.transfermarkt.com'  # Только рейтинги и форма команд
     }
 }
 
-# Логирование
+# Claude AI настройки
+CLAUDE_CONFIG = {
+    'api_key': 'YOUR_CLAUDE_API_KEY_HERE',  # Замените на ваш ключ
+    'model': 'claude-3-sonnet-20240229',
+    'max_tokens': 1000,
+    'temperature': 0.7,
+    'enabled': False  # Включить после получения API ключа
+}
+
+# Настройки логирования
 LOGGING_CONFIG = {
     'level': 'INFO',
-    'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    'file': 'truelivebet.log'
+    'format': '%(asctime)s - %(levelname)s - %(message)s',
+    'file': 'logs/bot.log',
+    'max_size_mb': 10,
+    'backup_count': 5
 }
 
-# База данных (простая JSON файл для начала)
+# Настройки базы данных
 DATABASE_CONFIG = {
-    'file_path': 'data/matches_history.json',
-    'backup_interval_hours': 24
+    'matches_file': 'data/matches_history.json',
+    'max_history_days': 30,
+    'backup_enabled': True
 }
 
-# Уведомления
+# Настройки уведомлений
 NOTIFICATION_CONFIG = {
-    'telegram_enabled': True,
-    'max_notifications_per_hour': 10,     # Максимум уведомлений в час
-    'notification_cooldown_minutes': 5,   # Задержка между уведомлениями
-    'include_match_url': True,            # Включать ссылку на матч
-    'include_odds': True                  # Включать коэффициенты
+    'min_confidence': 0.7,  # Минимальная уверенность для отправки
+    'max_notifications_per_hour': 10,  # Максимум уведомлений в час
+    'cooldown_minutes': 15  # Кулдаун между уведомлениями на один матч
 }
