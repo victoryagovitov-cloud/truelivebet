@@ -301,30 +301,18 @@ class TrueLiveBetAutomation:
             }
         }
 
-# Конфигурация по умолчанию
-DEFAULT_CONFIG = {
-    'cycle_interval': 300,  # 5 минут
-    'openai_api_key': None,
-    'anthropic_api_key': None,
-    'telegram_token': None,
-    'test_chat_id': None
-}
+# Импортируем конфигурацию
+from config import get_config, validate_config
 
 async def main():
     """Главная функция"""
     try:
         # Загружаем конфигурацию
-        config = DEFAULT_CONFIG.copy()
+        config = get_config()
         
-        # Загружаем переменные окружения
-        config['openai_api_key'] = os.getenv('OPENAI_API_KEY')
-        config['anthropic_api_key'] = os.getenv('ANTHROPIC_API_KEY')
-        config['telegram_token'] = os.getenv('TELEGRAM_BOT_TOKEN')
-        config['test_chat_id'] = int(os.getenv('TEST_CHAT_ID', '0'))
-        
-        # Проверяем обязательные параметры
-        if not config['telegram_token']:
-            logger.error("Не указан TELEGRAM_BOT_TOKEN")
+        # Проверяем корректность конфигурации
+        if not validate_config():
+            logger.error("Ошибка в конфигурации")
             return
         
         # Создаем и запускаем автоматизацию
