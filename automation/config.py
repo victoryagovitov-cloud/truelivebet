@@ -71,7 +71,7 @@ if __name__ == "__main__":
     print("🔧 Конфигурация TrueLiveBet:")
     config = get_config()
     for key, value in config.items():
-        if 'token' in key.lower() and value:
+        if 'token' in key.lower() and value and isinstance(value, str):
             # Скрываем токен для безопасности
             print(f"{key}: {value[:10]}...{value[-10:]}")
         else:

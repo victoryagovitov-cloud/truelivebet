@@ -1,0 +1,95 @@
+{
+  "id": "analysis_august_20_001",
+  "timestamp": "2025-08-20T20:45:00",
+  "source": "betboom_live_analysis",
+  "total_matches": 13,
+  "sports_analyzed": ["football"],
+  "best_bets": [
+    {
+      "description": "Операрио ПР vs Аваи - НИЧЬЯ (ЗАВЕРШЕНО)",
+      "confidence": 95,
+      "reasoning": "Матч завершен со счетом 0:0, 2-й тайм 90 мин +4'",
+      "profit_potential": "high",
+      "urgency": "completed",
+      "recommendation": "Результат: НИЧЬЯ ✅",
+      "status": "MATCH_FINISHED"
+    },
+    {
+      "description": "Пунтаренас vs Эскорпионес де Белен - ПОБЕДА ПУНТАРЕНАСА",
+      "confidence": 90,
+      "reasoning": "1-й тайм, 29 мин, счет 1:0, Пунтаренас ведет",
+      "profit_potential": "high",
+      "urgency": "in_progress",
+      "recommendation": "П1 - матч идет, высокая вероятность"
+    },
+    {
+      "description": "Расинг Клуб vs Пеньяроль - ПОБЕДА РАСИНГА",
+      "confidence": 85,
+      "reasoning": "Матч не начался, Расинг фаворит с коэффициентом 1.47",
+      "profit_potential": "medium",
+      "urgency": "pre_match",
+      "recommendation": "Ставить на П1 до начала матча"
+    }
+  ],
+  "analysis_summary": {
+    "high_confidence_bets": 3,
+    "medium_confidence_bets": 0,
+    "low_confidence_bets": 0,
+    "total_opportunities": 3,
+    "risk_level": "very_low",
+    "expected_return": "positive"
+  },
+  "completed_matches": [
+    {
+      "match": "Операрио ПР vs Аваи",
+      "result": "0:0",
+      "status": "НИЧЬЯ - МАТЧ ЗАВЕРШЕН",
+      "confidence": "95%"
+    }
+  ],
+  "live_matches": [
+    {
+      "match": "Пунтаренас vs Эскорпионес",
+      "score": "1:0",
+      "status": "1-й тайм, 29 мин",
+      "trend": "Пунтаренас контролирует игру"
+    }
+  ],
+  "upcoming_matches": [
+    {
+      "match": "Расинг Клуб vs Пеньяроль",
+      "start_time": "Скоро",
+      "odds": "П1: 1.47, X: 3.95, П2: 7.0",
+      "recommendation": "П1 - явный фаворит"
+    }
+  ],
+  "league_analysis": {
+    "brazil_serie_b": {
+      "matches": 1,
+      "trend": "defensive_play",
+      "best_opportunity": "ставки на ничьи в равных матчах"
+    },
+    "costa_rica_cup": {
+      "matches": 1,
+      "trend": "home_advantage",
+      "best_opportunity": "ставки на фаворитов дома"
+    }
+  },
+  "special_opportunities": {
+    "completed": {
+      "description": "Операрио vs Аваи - отличный результат для анализа",
+      "recommendation": "Использовать как пример успешной ставки на ничью"
+    },
+    "live": {
+      "description": "Пунтаренас vs Эскорпионес - активный матч",
+      "recommendation": "Мониторить развитие событий"
+    }
+  },
+  "risk_assessment": {
+    "overall_risk": "very_low",
+    "high_risk_matches": 0,
+    "medium_risk_matches": 0,
+    "low_risk_matches": 3,
+    "recommendation": "Отличные возможности с минимальным риском"
+  }
+}

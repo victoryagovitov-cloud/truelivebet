@@ -1,0 +1,69 @@
+{
+  "id": "analysis_fresh_001",
+  "timestamp": "2025-01-17T19:30:00",
+  "source": "betboom_live_analysis",
+  "total_matches": 12,
+  "sports_analyzed": ["football"],
+  "best_bets": [
+    {
+      "description": "Операрио ПР vs Аваи - НИЧЬЯ",
+      "confidence": 88,
+      "reasoning": "0:0 на 72-й минуте, коэффициент на ничью 1.55 (очень низкий)",
+      "profit_potential": "high",
+      "urgency": "high",
+      "recommendation": "Ставить на ничью"
+    },
+    {
+      "description": "Пунтаренас vs Эскорпионес - ПОБЕДА ПУНТАРЕНАСА",
+      "confidence": 82,
+      "reasoning": "Фаворит по коэффициентам (1.53), начало матча",
+      "profit_potential": "medium",
+      "urgency": "medium",
+      "recommendation": "Ставить на победу Пунтаренаса"
+    }
+  ],
+  "analysis_summary": {
+    "high_confidence_bets": 2,
+    "medium_confidence_bets": 0,
+    "low_confidence_bets": 0,
+    "total_opportunities": 2,
+    "risk_level": "low",
+    "expected_return": "positive"
+  },
+  "dead_bets": {
+    "description": "НЕТ - недостаточно данных для столь высокой уверенности",
+    "threshold": ">95%"
+  },
+  "watch_matches": [
+    {
+      "match": "Кельн vs Аугсбург",
+      "score": "1:1",
+      "status": "равная игра"
+    },
+    {
+      "match": "Падерборн vs Арминия",
+      "score": "1:1", 
+      "status": "равная игра"
+    }
+  ],
+  "league_analysis": {
+    "brazil_serie_a": {
+      "matches": 2,
+      "trend": "competitive_odds",
+      "best_opportunity": "ставки на ничьи в равных матчах"
+    }
+  },
+  "special_opportunities": {
+    "football": {
+      "description": "Лайв матчи с хорошими коэффициентами",
+      "recommendation": "Фокус на ничьи и фаворитов с коэффициентами 1.3-1.6"
+    }
+  },
+  "risk_assessment": {
+    "overall_risk": "low",
+    "high_risk_matches": 0,
+    "medium_risk_matches": 1,
+    "low_risk_matches": 1,
+    "recommendation": "Безопасные ставки с высокой уверенностью"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "id": "analysis_current_001",
+  "timestamp": "2025-01-17T18:30:00",
+  "source": "betboom_live_analysis",
+  "total_matches": 67,
+  "sports_analyzed": ["football", "tennis", "esports", "ufc"],
+  "best_bets": [
+    {
+      "description": "Зверев А. vs Алькарас К. - Теннис ATP 1000 Цинциннати - П1 (1.9) - Высокая уверенность",
+      "confidence": 92,
+      "reasoning": "Зверев в отличной форме, личные встречи 6-5 в его пользу, хард - его любимая поверхность",
+      "profit_potential": "high",
+      "urgency": "medium"
+    },
+    {
+      "description": "Дрикус Дю Плесси vs Хамзат Чимаев - UFC - П2 (1.33) - Фаворит с отличными шансами",
+      "confidence": 88,
+      "reasoning": "Чимаев непобедим (14-0), агрессивный стиль, техническое превосходство",
+      "profit_potential": "medium",
+      "urgency": "high"
+    },
+    {
+      "description": "Team Spirit vs MongolZ - CS2 BLAST - П1 (1.3) - Надежная ставка",
+      "confidence": 85,
+      "reasoning": "Team Spirit в топ-3 мира, MongolZ значительно слабее, HLTV рейтинг 3 vs 4",
+      "profit_potential": "low",
+      "urgency": "medium"
+    },
+    {
+      "description": "Манчестер Юн vs Арсенал - АПЛ - П2 (1.94) - Арсенал фаворит",
+      "confidence": 82,
+      "reasoning": "Арсенал в отличной форме, МЮ перестраивается, историческое преимущество",
+      "profit_potential": "medium",
+      "urgency": "medium"
+    },
+    {
+      "description": "Краснодар vs Сочи - РПЛ - П1 (1.29) - Краснодар дома силен",
+      "confidence": 80,
+      "reasoning": "Краснодар лидер РПЛ, Сочи в нижней части таблицы, домашний матч",
+      "profit_potential": "low",
+      "urgency": "medium"
+    }
+  ],
+  "analysis_summary": {
+    "high_confidence_bets": 5,
+    "medium_confidence_bets": 8,
+    "low_confidence_bets": 12,
+    "total_opportunities": 25,
+    "risk_level": "medium",
+    "expected_return": "positive"
+  },
+  "league_analysis": {
+    "russia_premier_league": {
+      "matches": 8,
+      "trend": "home_advantage_strong",
+      "best_opportunity": "ставки на домашние команды в топ-5"
+    },
+    "england_premier_league": {
+      "matches": 6,
+      "trend": "favorites_winning",
+      "best_opportunity": "ставки на фаворитов с коэффициентами 1.5-2.0"
+    },
+    "spain_la_liga": {
+      "matches": 5,
+      "trend": "competitive_odds",
+      "best_opportunity": "ставки на ничьи в равных матчах"
+    },
+    "germany_bundesliga": {
+      "matches": 7,
+      "trend": "high_scoring",
+      "best_opportunity": "ставки на тотал больше 2.5"
+    },
+    "italy_serie_a": {
+      "matches": 4,
+      "trend": "defensive_style",
+      "best_opportunity": "ставки на тотал меньше 2.5"
+    },
+    "brazil_serie_a": {
+      "matches": 6,
+      "trend": "home_advantage",
+      "best_opportunity": "ставки на домашние команды"
+    }
+  },
+  "special_opportunities": {
+    "tennis": {
+      "description": "ATP 1000 Цинциннати - отличные коэффициенты на фаворитов",
+      "recommendation": "Ставки на топ-10 игроков с коэффициентами >1.5"
+    },
+    "esports": {
+      "description": "BLAST Bounty Fall 2025 - четкая иерархия команд",
+      "recommendation": "Ставки на фаворитов в матчах с явным преимуществом"
+    },
+    "ufc": {
+      "description": "Главный бой вечера - Чимаев vs Дю Плесси",
+      "recommendation": "П2 (Чимаев) - самый надежный выбор"
+    }
+  },
+  "risk_assessment": {
+    "overall_risk": "medium",
+    "high_risk_matches": 3,
+    "medium_risk_matches": 15,
+    "low_risk_matches": 7,
+    "recommendation": "Фокус на матчах со средним риском и высокой уверенностью"
+  },
+  "profit_optimization": {
+    "strategy": "Комбинированные ставки на фаворитов с коэффициентами 1.3-2.0",
+    "expected_roi": "15-25%",
+    "bankroll_management": "Максимум 5% на одну ставку",
+    "optimal_combinations": "2-3 матча в экспрессе"
+  }
+}

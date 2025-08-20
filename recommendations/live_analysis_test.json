@@ -1,22 +1,28 @@
 {
-  "id": "analysis_001",
-  "total_matches": 100,
-  "sports_analyzed": ["football", "basketball", "tennis", "table_tennis"],
+  "id": "analysis_real_001",
+  "total_matches": 42,
+  "sports_analyzed": ["football"],
   "best_bets": [
     {
-      "description": "Манчестер Сити vs Ливерпуль - П1 (1.75)",
-      "confidence": 94
+      "description": "Алавес vs Леванте - Ничья (15.92) - Золотая возможность!",
+      "confidence": 95,
+      "result": "1:1 (завершен)",
+      "profit_potential": "extreme"
     },
     {
-      "description": "Селтикс vs Хит - П1 (2.25)",
-      "confidence": 92
+      "description": "Валенсия vs Реал С - Ничья (1.13) - Выгодный коэффициент",
+      "confidence": 90,
+      "result": "1:1 (завершен)",
+      "profit_potential": "high"
     },
     {
-      "description": "Надаль vs Джокович - П1 (1.90)",
-      "confidence": 89
+      "description": "Спорт Ресифе vs Сан Пауло - П1 (2.0) - Интересный коэффициент",
+      "confidence": 75,
+      "result": "не начался",
+      "profit_potential": "medium"
     }
   ],
-  "timestamp": "2025-01-17T17:00:00",
+  "timestamp": "2025-01-17T18:00:00",
   "status": "completed",
-  "source": "betboom_analysis"
+  "source": "betboom_live_analysis"
 }

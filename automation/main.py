@@ -67,9 +67,9 @@ class TrueLiveBetAutomation:
             )
             logger.info("AI анализатор инициализирован")
             
-                    # Инициализируем Telegram бота
-        if self.config.get('telegram_token'):
-            self.bot = TrueLiveBetBot(self.config['telegram_token'])
+            # Инициализируем Telegram бота
+            if self.config.get('telegram_token'):
+                self.bot = TrueLiveBetBot(self.config['telegram_token'])
             logger.info("Telegram бот инициализирован")
             
             # Инициализируем издатель канала
@@ -139,9 +139,9 @@ class TrueLiveBetAutomation:
             filtered_analyses = self._filter_analyses(analyses)
             logger.info(f"Отфильтровано {len(filtered_analyses)} анализов")
             
-                    # 4. Отправка результатов в Telegram
-        if self.bot and filtered_analyses:
-            await self._send_analyses(filtered_analyses)
+            # 4. Отправка результатов в Telegram
+            if self.bot and filtered_analyses:
+                await self._send_analyses(filtered_analyses)
             
             # 5. Публикация в канал
             if hasattr(self, 'channel_publisher') and filtered_analyses:

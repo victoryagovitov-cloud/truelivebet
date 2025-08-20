@@ -1,0 +1,42 @@
+{
+  "update_frequency": {
+    "mode": "optimized",
+    "intervals": {
+      "standard": 1800,
+      "hourly": 3600,
+      "daily": 86400
+    },
+    "description": "Оптимальная частота без лишних обновлений"
+  },
+  "smart_notifications": {
+    "enabled": true,
+    "triggers": {
+      "coefficient_changes": "significant_only",
+      "new_matches": "interesting_events",
+      "results": "important_matches"
+    },
+    "frequency": {
+      "critical": "immediate",
+      "important": "30_min",
+      "regular": "1_hour"
+    }
+  },
+  "analysis_schedule": {
+    "morning_report": "09:00",
+    "midday_update": "12:00",
+    "evening_report": "18:00",
+    "night_update": "22:00"
+  },
+  "telegram_settings": {
+    "channel": "@truelivebet",
+    "format": "optimized",
+    "grouping": "by_importance",
+    "summaries": "daily"
+  },
+  "performance": {
+    "resource_usage": "optimized",
+    "data_freshness": "30_min_old_max",
+    "accuracy": "high",
+    "reliability": "stable"
+  }
+}
