@@ -116,21 +116,35 @@ class HandballAnalyzer(BaseAnalyzer):
         
         return filtered
     
-    def analyze_match_statistics(self, betboom_match: Dict[str, Any], 
-                               scores24_match: Dict[str, Any]) -> Dict[str, Any]:
-        """Анализирует статистику гандбольного матча"""
+    async def analyze_match_statistics(self, betboom_match: Dict[str, Any], 
+                                     scores24_match: Dict[str, Any]) -> Dict[str, Any]:
+        """Анализирует статистику гандбольного матча через Claude AI"""
         analysis_type = betboom_match.get('analysis_type', 'victory')
         
+        # Используем Claude для анализа
         if analysis_type == 'victory':
-            return self._analyze_victory_probability(betboom_match, scores24_match)
+            claude_result = await self.claude_analyzer.analyze_handball_victory(
+                betboom_match, scores24_match
+            )
         elif analysis_type == 'total':
-            return self._analyze_total_probability(betboom_match, scores24_match)
+            claude_result = await self.claude_analyzer.analyze_handball_total(
+                betboom_match, scores24_match
+            )
+        else:
+            return {"confidence": 0, "reasoning": "Неизвестный тип анализа"}
         
-        return {"confidence": 0, "reasoning": "Неизвестный тип анализа"}
+        # Если Claude анализ неудачен, используем fallback логику
+        if claude_result.get('confidence', 0) == 0:
+            if analysis_type == 'victory':
+                return self._fallback_victory_analysis(betboom_match, scores24_match)
+            else:
+                return self._fallback_total_analysis(betboom_match, scores24_match)
+        
+        return claude_result
     
-    def _analyze_victory_probability(self, betboom_match: Dict[str, Any], 
-                                   scores24_match: Dict[str, Any]) -> Dict[str, Any]:
-        """Анализирует вероятность победы при большом разрыве"""
+    def _fallback_victory_analysis(self, betboom_match: Dict[str, Any], 
+                                  scores24_match: Dict[str, Any]) -> Dict[str, Any]:
+        """Резервный анализ вероятности победы при большом разрыве"""
         score = betboom_match.get('score', '')
         goals1, goals2 = map(int, score.split(':'))
         
@@ -181,9 +195,9 @@ class HandballAnalyzer(BaseAnalyzer):
             "goal_difference": goal_difference
         }
     
-    def _analyze_total_probability(self, betboom_match: Dict[str, Any], 
-                                 scores24_match: Dict[str, Any]) -> Dict[str, Any]:
-        """Анализирует тоталы по формуле из требований"""
+    def _fallback_total_analysis(self, betboom_match: Dict[str, Any], 
+                                scores24_match: Dict[str, Any]) -> Dict[str, Any]:
+        """Резервный анализ тоталов по формуле из требований"""
         total_goals = betboom_match.get('total_goals', 0)
         minutes_played = betboom_match.get('minutes_played', 60)
         

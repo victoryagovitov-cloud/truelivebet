@@ -116,9 +116,24 @@ class TennisAnalyzer(BaseAnalyzer):
         
         return filtered
     
-    def analyze_match_statistics(self, betboom_match: Dict[str, Any], 
-                               scores24_match: Dict[str, Any]) -> Dict[str, Any]:
-        """Анализирует статистику теннисного матча"""
+    async def analyze_match_statistics(self, betboom_match: Dict[str, Any], 
+                                     scores24_match: Dict[str, Any]) -> Dict[str, Any]:
+        """Анализирует статистику теннисного матча через Claude AI"""
+        
+        # Используем Claude для анализа
+        claude_result = await self.claude_analyzer.analyze_tennis_match(
+            betboom_match, scores24_match
+        )
+        
+        # Если Claude анализ неудачен, используем fallback логику
+        if claude_result.get('confidence', 0) == 0:
+            return self._fallback_analysis(betboom_match, scores24_match)
+        
+        return claude_result
+    
+    def _fallback_analysis(self, betboom_match: Dict[str, Any], 
+                          scores24_match: Dict[str, Any]) -> Dict[str, Any]:
+        """Резервный анализ если Claude недоступен"""
         sets_score = betboom_match.get('sets_score', '')
         games_score = betboom_match.get('games_score', '')
         

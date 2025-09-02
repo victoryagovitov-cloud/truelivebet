@@ -17,6 +17,7 @@ from analyzers.table_tennis_analyzer import TableTennisAnalyzer
 from analyzers.handball_analyzer import HandballAnalyzer
 from utils.fuzzy_matcher import FuzzyMatcher
 from utils.report_generator import ReportGenerator
+from utils.advanced_claude_analyzer import AdvancedClaudeAnalyzer
 from config.settings import ANALYSIS_CONFIG
 
 # Настройка логирования
@@ -37,6 +38,7 @@ class SportsAnalyzer:
     def __init__(self):
         self.fuzzy_matcher = FuzzyMatcher()
         self.report_generator = ReportGenerator()
+        self.claude_analyzer = AdvancedClaudeAnalyzer()
         
         # Инициализация анализаторов для каждого вида спорта
         self.analyzers = {
@@ -46,7 +48,7 @@ class SportsAnalyzer:
             'handball': HandballAnalyzer(self.fuzzy_matcher)
         }
         
-        logger.info("SportsAnalyzer инициализирован")
+        logger.info("SportsAnalyzer инициализирован с Claude AI интеграцией")
     
     async def run_analysis_cycle(self) -> Dict[str, List[Dict[str, Any]]]:
         """Выполняет полный цикл анализа всех видов спорта"""

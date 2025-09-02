@@ -1,5 +1,6 @@
 """
 Базовый класс для анализаторов спортивных событий
+Интегрирован с Claude AI для интеллектуального анализа
 """
 
 import asyncio
@@ -7,6 +8,9 @@ import logging
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Optional
 import json
+
+from utils.claude_analyzer import ClaudeAnalyzer
+from config.claude_config import CLAUDE_CONFIG
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +22,9 @@ class BaseAnalyzer(ABC):
         self.fuzzy_matcher = fuzzy_matcher
         self.sport_name = sport_name
         self.logger = logging.getLogger(f"{__name__}.{sport_name}")
+        
+        # Инициализация Claude анализатора
+        self.claude_analyzer = ClaudeAnalyzer(CLAUDE_CONFIG.get("api_key"))
     
     @abstractmethod
     async def get_betboom_matches(self) -> List[Dict[str, Any]]:
@@ -35,10 +42,24 @@ class BaseAnalyzer(ABC):
         pass
     
     @abstractmethod
-    def analyze_match_statistics(self, betboom_match: Dict[str, Any], 
-                               scores24_match: Dict[str, Any]) -> Dict[str, Any]:
-        """Анализирует статистику матча для определения фаворита"""
-        pass
+    async def analyze_match_statistics(self, betboom_match: Dict[str, Any], 
+                                     scores24_match: Dict[str, Any]) -> Dict[str, Any]:
+        """Анализирует статистику матча с помощью Claude AI"""
+        
+        # Выбираем метод анализа в зависимости от вида спорта
+        if self.sport_name == 'football':
+            return await self.claude_analyzer.analyze_football_match(betboom_match, scores24_match)
+        elif self.sport_name == 'tennis':
+            return await self.claude_analyzer.analyze_tennis_match(betboom_match, scores24_match)
+        elif self.sport_name == 'table_tennis':
+            return await self.claude_analyzer.analyze_table_tennis_match(betboom_match, scores24_match)
+        elif self.sport_name == 'handball':
+            if betboom_match.get('analysis_type') == 'total':
+                return await self.claude_analyzer.analyze_handball_total(betboom_match, scores24_match)
+            else:
+                return await self.claude_analyzer.analyze_handball_victory(betboom_match, scores24_match)
+        else:
+            return {"confidence": 0, "reasoning": "Неподдерживаемый вид спорта"}
     
     async def analyze(self) -> List[Dict[str, Any]]:
         """Основной метод анализа"""
@@ -80,8 +101,8 @@ class BaseAnalyzer(ABC):
                         self.logger.debug(f"Не найдено соответствие для матча: {betboom_match}")
                         continue
                     
-                    # Анализ статистики
-                    analysis_result = self.analyze_match_statistics(
+                    # Анализ статистики через Claude AI
+                    analysis_result = await self.analyze_match_statistics(
                         betboom_match, matched_data['match']
                     )
                     

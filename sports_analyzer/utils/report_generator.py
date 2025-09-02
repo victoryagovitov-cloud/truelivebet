@@ -46,10 +46,62 @@ class ReportGenerator:
         template = OUTPUT_TEMPLATES.get(template_key, "")
         
         try:
-            return template.format(**match_data)
+            # Подготавливаем данные для форматирования
+            format_data = match_data.copy()
+            
+            # Добавляем недостающие поля для разных видов спорта
+            if sport == 'tennis' or sport == 'table_tennis':
+                if 'winner' not in format_data:
+                    format_data['winner'] = format_data.get('favorite_player', format_data.get('player1', 'Игрок'))
+            
+            if sport == 'football':
+                if 'odds' in format_data and isinstance(format_data['odds'], dict):
+                    format_data['odds'] = format_data['odds'].get('1', 'N/A')
+            
+            return template.format(**format_data)
         except KeyError as e:
             logger.error(f"Ошибка форматирования шаблона {template_key}: {e}")
-            return f"Ошибка форматирования данных матча: {match_data}"
+            logger.debug(f"Доступные поля: {list(match_data.keys())}")
+            
+            # Создаем упрощенный формат
+            return self._create_simple_format(sport, match_data)
+    
+    def _create_simple_format(self, sport: str, match_data: Dict[str, Any]) -> str:
+        """Создает упрощенный формат при ошибках шаблона"""
+        sport_emojis = {
+            'football': '⚽',
+            'tennis': '🎾', 
+            'table_tennis': '🏓',
+            'handball': '🤾'
+        }
+        
+        emoji = sport_emojis.get(sport, '🏆')
+        
+        if sport in ['tennis', 'table_tennis']:
+            player1 = match_data.get('player1', 'Игрок 1')
+            player2 = match_data.get('player2', 'Игрок 2')
+            score = match_data.get('sets_score', 'N/A')
+            confidence = match_data.get('confidence', 0)
+            reasoning = match_data.get('reasoning', 'Анализ Claude AI')
+            
+            return f"""<b>{emoji} {player1} – {player2}</b>
+🎯 Счет: <b>{score}</b>
+✅ Ставка: <b>Победа фаворита</b>
+📊 Уверенность: <b>{confidence}%</b>
+📌 <i>{reasoning}</i>"""
+        
+        else:  # football, handball
+            team1 = match_data.get('team1', 'Команда 1')
+            team2 = match_data.get('team2', 'Команда 2')
+            score = match_data.get('score', 'N/A')
+            confidence = match_data.get('confidence', 0)
+            reasoning = match_data.get('reasoning', 'Анализ Claude AI')
+            
+            return f"""<b>{emoji} {team1} – {team2}</b>
+🏟️ Счет: <b>{score}</b>
+✅ Ставка: <b>П1</b>
+📊 Уверенность: <b>{confidence}%</b>
+📌 <i>{reasoning}</i>"""
     
     def generate_telegram_report(self, analysis_results: Dict[str, List[Dict[str, Any]]]) -> str:
         """Генерирует финальный отчет для Telegram"""
