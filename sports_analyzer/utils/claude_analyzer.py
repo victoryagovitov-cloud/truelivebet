@@ -256,6 +256,11 @@ class ClaudeAnalyzer:
             logger.info("ТЕСТОВЫЙ РЕЖИМ Claude - возвращаем заглушку")
             return await self._get_mock_response(prompt)
         
+        # Проверяем что API ключ настроен
+        if not self.api_key or "YOUR_CLAUDE_API_KEY" in self.api_key:
+            logger.warning("Claude API ключ не настроен, используем заглушки")
+            return await self._get_mock_response(prompt)
+        
         try:
             payload = {
                 "model": self.model,

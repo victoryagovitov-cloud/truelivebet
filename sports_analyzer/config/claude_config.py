@@ -7,7 +7,7 @@ from typing import Dict, Any
 
 # Настройки Claude API
 CLAUDE_CONFIG = {
-    "api_key": os.getenv("CLAUDE_API_KEY", "YOUR_CLAUDE_API_KEY"),
+    "api_key": os.getenv("CLAUDE_API_KEY", "DEMO_MODE"),  # Тестовый режим
     "model": "claude-3-5-sonnet-20241022",
     "max_tokens": 1000,
     "temperature": 0.1,  # Низкая температура для точного анализа
