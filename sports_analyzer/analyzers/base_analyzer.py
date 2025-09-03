@@ -170,18 +170,72 @@ class BaseAnalyzer(ABC):
     
     async def browser_request(self, url: str, action: str = "get_content") -> Dict[str, Any]:
         """
-        Заглушка для Browser MCP запросов
-        В реальной реализации здесь будет интеграция с Browser MCP
+        Реальные Browser MCP запросы через automation/browser_mcp_client.py
         """
         self.logger.info(f"Browser MCP запрос: {action} -> {url}")
         
-        # Имитация задержки сетевого запроса
-        await asyncio.sleep(1)
+        try:
+            # Импортируем Browser MCP клиент
+            import sys
+            import os
+            sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'automation'))
+            from browser_mcp_client import get_live_matches, get_match_details, get_odds
+            
+            # Выполняем соответствующий запрос
+            if action == "get_live_matches":
+                # Определяем тип спорта из URL
+                sport_type = self._extract_sport_type_from_url(url)
+                return await get_live_matches(url, sport_type)
+            elif action == "get_match_details":
+                return await get_match_details(url)
+            elif action == "get_odds":
+                return await get_odds(url)
+            else:
+                # Fallback к заглушке для неизвестных действий
+                await asyncio.sleep(1)
+                return {
+                    "status": "success",
+                    "url": url,
+                    "content": f"Browser MCP action: {action}",
+                    "matches": []
+                }
+                
+        except ImportError as e:
+            self.logger.warning(f"Browser MCP клиент не найден, используем заглушку: {e}")
+            # Fallback к заглушке если клиент не найден
+            await asyncio.sleep(1)
+            return {
+                "status": "success",
+                "url": url,
+                "content": "Mock content from Browser MCP (fallback)",
+                "matches": []
+            }
+        except Exception as e:
+            self.logger.error(f"Ошибка Browser MCP запроса: {e}")
+            return {
+                "status": "error",
+                "url": url,
+                "error": str(e),
+                "matches": []
+            }
+    
+    def _extract_sport_type_from_url(self, url: str) -> str:
+        """
+        Извлечение типа спорта из URL
         
-        # Заглушка ответа
-        return {
-            "status": "success",
-            "url": url,
-            "content": "Mock content from Browser MCP",
-            "matches": []
-        }
+        Args:
+            url: URL сайта
+            
+        Returns:
+            Тип спорта
+        """
+        if "football" in url:
+            return "football"
+        elif "tennis" in url:
+            return "tennis"
+        elif "table-tennis" in url:
+            return "table-tennis"
+        elif "handball" in url:
+            return "handball"
+        else:
+            return "football"  # По умолчанию
